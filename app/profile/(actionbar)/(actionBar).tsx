@@ -15,7 +15,7 @@ export default function ActionBar() {
     setOpenDrawer(value)
   }
   useEffect(() => {
-    setAvatar(`http://87.155.172.252:8090/api/files/users/m5aj5rabboghgwk/avatar_QhF6CXuBdp.png`)
+    setAvatar(`${process.env.NEXT_PUBLIC_DBURL}/api/files/users/m5aj5rabboghgwk/avatar_QhF6CXuBdp.png`)
   })
 
   return (
