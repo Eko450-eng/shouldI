@@ -1,10 +1,24 @@
 'use client'
+import '../../../styles/globals.scss'
 import { TextField } from '@mui/material'
 import { useState } from 'react'
 import { IQuestionSimplified } from '../../../interfaces/interfaces'
 import createNew from './(logic)'
 import { useRouter } from 'next/navigation'
 import { Button } from '@mui/material'
+import { createTheme } from '@mui/material'
+
+const style = createTheme({
+  components: {
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          color: 'white',
+        }
+      }
+    }
+  }
+})
 
 export default function Page() {
   const router = useRouter()
@@ -24,11 +38,13 @@ export default function Page() {
 
         <TextField
           className="white"
+          sx={{ label: { color: "white" } }}
           onChange={(v) => setQuestion({ ...question, title: v.target.value })}
           value={question.title}
           label="Title" variant="outlined" />
 
         <TextField
+          sx={{ label: { color: "white" } }}
           className="white"
           onChange={(v) => setQuestion({ ...question, desc: v.target.value })}
           value={question.desc}
@@ -37,12 +53,14 @@ export default function Page() {
 
         <div className="flex-center row">
           <TextField
+            sx={{ label: { color: "white" } }}
             className="white"
             onChange={(v) => setQuestion({ ...question, optionNameOne: v.target.value })}
             value={question.optionNameOne}
             label="Answer one" variant="outlined" />
 
           <TextField
+            sx={{ label: { color: "white" } }}
             className="white"
             onChange={(v) => setQuestion({ ...question, optionNameTwo: v.target.value })}
             value={question.optionNameTwo}

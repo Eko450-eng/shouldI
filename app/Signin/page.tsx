@@ -33,16 +33,19 @@ export default function Login() {
         {loginView == "register" &&
 
           <TextField
+            sx={{ label: { color: "white" } }}
             className="white"
             onChange={(v) => setEmail(v.target.value)}
             value={email}
             label="Email" variant="outlined" />
         }
         <TextField
+          sx={{ label: { color: "white" } }}
           onChange={(v) => setUserName(v.target.value)}
           value={userName}
           label="Username" variant="outlined" />
         <TextField
+          sx={{ label: { color: "white" } }}
           onChange={(v) => setpassword(v.target.value)}
           value={password}
           type="password"
@@ -51,6 +54,7 @@ export default function Login() {
         {loginView == "register" ?
           <>
             <TextField
+              sx={{ label: { color: "white" } }}
               onChange={(v) => setConfirmPassword(v.target.value)}
               value={confirmPassword}
               type="password"
