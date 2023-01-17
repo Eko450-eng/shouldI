@@ -1,0 +1,10 @@
+{
+  "name": "Should I? - Let others pick",
+  "short_name": "Should I",
+  "theme_color": "#0a9396",
+  "background_color": "#001219",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}

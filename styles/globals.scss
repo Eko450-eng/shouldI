@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+$rich-black-fogra-29: hsla(197, 100%, 5%, 1);
+$blue-sapphire: hsla(190, 100%, 23%, 1);
+$viridian-green: hsla(181, 88%, 31%, 1);
+$middle-blue-green: hsla(160, 41%, 70%, 1);
+$medium-champagne: hsla(45, 60%, 78%, 1);
+$gamboge: hsla(39, 100%, 47%, 1);
+$alloy-orange: hsla(30, 98%, 40%, 1);
+$rust: hsla(19, 97%, 37%, 1);
+$rufous: hsla(5, 81%, 38%, 1);
+$ruby-red: hsla(358, 64%, 37%, 1);
+$border-radius: 15px;
+
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Mixins                                                   │
+//  ╰──────────────────────────────────────────────────────────╯
+@mixin flex($dir: column, $jc: unset, $ac: unset) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jc;
+  align-items: $ac;
+}
+
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Base                                                     │
+//  ╰──────────────────────────────────────────────────────────╯
+body{
+  background-color: $rich-black-fogra-29;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}
+
+.title{
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Components                                               │
+//  ╰──────────────────────────────────────────────────────────╯
+.action-bar{
+  @include flex(column, jc, ac);
+}
+
+.question-card{
+  background: linear-gradient(129.88deg, $blue-sapphire 1.92%, rgba(0, 95, 115, 0.1) 103.45%);;
+  border-radius: $border-radius;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  padding: .5rem 1rem;
+  margin: 1rem;
+  position: relative;
+  &-title{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+  }
+  &-desc{
+    @extend .question-card-title;
+    font-family: "Montserrat", sans-serif;
+  }
+  &-image-wrapper{
+    @include flex(row, center, center);
+    padding: 1rem;
+    gap: 1rem;
+    .double-image{
+      border-radius: $border-radius;
+      max-width: 40%;
+      min-width: 100px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+    .single-image{
+      @extend .double-image;
+      max-width: 100%;
+    }
+  }
+
+  .interaction-row{
+    @include flex(row, space-evenly, ac);
+    position:absolute;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+}
+
+
+.fullscreen-image{
+  object-fit: scale-down;
+  object-position: center;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+
+.refresh-icon{
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Display options                                          │
+//  ╰──────────────────────────────────────────────────────────╯
+.flex-center{
+  @include flex(column, center, center);
+  gap: 1rem;
+  color: white;
+}
+
+.row{
+  flex-direction: row;
+  text-align: center
+}
+
+.space-evenly{
+  @extend .flex-center;
+  justify-content: space-evenly;
+  align-items: space-evenly;
+}
+
+.space-between{
+  @extend .flex-center;
+  justify-content: space-between;
+  align-items: space-between;
+  padding: 0 1rem
+}
+
+.center{
+  margin: 1rem auto;
+}
+
+.dark-bg{
+  background-color: $rich-black-fogra-29;
+}
+
+
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Material ui                                              │
+//  ╰──────────────────────────────────────────────────────────╯
+.MuiInputBase-root {
+  color: white;
+}
+
+.MuiInputLabel-root {
+  color: white;
+}
+
+.MuiButtonBase-root {
+  color: white; 
+}
+
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Buttons                                                  │
+//  ╰──────────────────────────────────────────────────────────╯
+.link-btn{
+  text-decoration: none;
+  color: unset;
+  &-icon{
+    @include flex(row, center, center);
+    border-radius: $border-radius;
+    padding: .25rem;
+    background-color: $blue-sapphire;
+    width: 1rem;
+    height: 1rem;
+    * {
+      color: $rich-black-fogra-29;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+.btn {
+  border-radius: $border-radius;
+  background: linear-gradient(97.17deg, $blue-sapphire 0%, $viridian-green 100%);
+  // background: linear-gradient(97.17deg, $viridian-green 0%, $blue-sapphire 100%);
+  color:white;
+  padding:.5rem 1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: .9rem;
+  border:none; 
+  outline:none;
+  &-warn{
+    @extend .btn;
+    padding: .3rem;
+    font-size: .8rem;
+    background: linear-gradient(97.17deg, $rust 0%, $rufous 100%);
+  }
+  &-success{
+    @extend .btn-warn;
+    background: linear-gradient(97.17deg, $viridian-green 0%, $blue-sapphire 100%);
+  }
+}
+
+.answer-selection{
+  @include flex(row, space-evenly, ac);
+  &-selected{
+    border-radius: $border-radius;
+    padding: .5rem;
+    border: 1px solid white;
+    background-color: $viridian-green;
+  }
+  &-text{
+    @extend .answer-selection-selected;
+    border-color: $viridian-green;
+  }
+}

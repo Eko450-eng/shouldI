@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+pb_data/*
+pb_migrations/*
 
 # next.js
 /.next/
@@ -27,6 +29,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.local
 
 # vercel
 .vercel
