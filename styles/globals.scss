@@ -143,6 +143,10 @@ body{
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Material ui                                              │
 //  ╰──────────────────────────────────────────────────────────╯
+.MuiInput-root {
+  color: white;
+}
+
 .MuiInputBase-root {
   color: white;
 }
@@ -179,8 +183,7 @@ body{
 .btn {
   border-radius: $border-radius;
   background: linear-gradient(97.17deg, $blue-sapphire 0%, $viridian-green 100%);
-  // background: linear-gradient(97.17deg, $viridian-green 0%, $blue-sapphire 100%);
-  color:white;
+  color:white !important;
   padding:.5rem 1rem;
   font-family: "Poppins", sans-serif;
   font-size: .9rem;

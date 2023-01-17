@@ -69,7 +69,7 @@ export default function Page() {
           </Button>
         </div>
 
-        <Button
+        <button
           className="btn"
           onClick={() => createNew(question).then(
             (e) => {
@@ -80,7 +80,7 @@ export default function Page() {
             }
           )}>
           Create
-        </Button>
+        </button>
       </div>
     </div>
   )
