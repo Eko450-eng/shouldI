@@ -8,7 +8,7 @@ const withPWA = require('next-pwa')({
 module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ["documentinatordb.ddns.net", "87.155.172.252"]
+    domains: ["documentinatordb.ddns.net", "shouldi.fly.dev"]
   },
   experimental: {
     appDir: true
