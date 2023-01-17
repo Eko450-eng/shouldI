@@ -24,7 +24,7 @@ export default function ActionBar() {
         <Link className="link-btn" href="/">
           <h2>Should I?</h2>
         </Link>
-        <AvatarIcon openDrawer={(t: any) => openDrawer(t)} avatar={avatar} />
+        {pb.authStore.isValid && <AvatarIcon openDrawer={(t: any) => openDrawer(t)} avatar={avatar} />}
       </div>
       <Buttons />
       <Drawer
