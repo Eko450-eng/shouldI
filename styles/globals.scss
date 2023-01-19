@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJnecnFHGPezSQ.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459WZhyyTh89ZNpQ.woff2) format('woff2');
+}
+
 $rich-black-fogra-29: hsla(197, 100%, 5%, 1);
 $blue-sapphire: hsla(190, 100%, 23%, 1);
 $viridian-green: hsla(181, 88%, 31%, 1);
@@ -10,6 +24,7 @@ $rust: hsla(19, 97%, 37%, 1);
 $rufous: hsla(5, 81%, 38%, 1);
 $ruby-red: hsla(358, 64%, 37%, 1);
 $border-radius: 15px;
+$border-radius-icon: 100%;
 
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Mixins                                                   │
@@ -39,6 +54,52 @@ body{
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Components                                               │
 //  ╰──────────────────────────────────────────────────────────╯
+.comment-input{
+  margin: 1rem  0;
+}
+
+.commentbox-wrapper{
+  @include flex(column, jc, ac);
+  border-radius: $border-radius;
+  width: 85%;
+  margin: 0 auto;
+  .commentbox{
+    @include flex(column, jc, ac);
+    border: 1px solid $rich-black-fogra-29;
+    border-radius: $border-radius;
+  background: linear-gradient(129.88deg, rgba(0, 95, 115, 0.1) 1.92%, $blue-sapphire 103.45%);;
+    margin: .2rem 0;
+    p{
+      margin: .5rem
+    }
+    p:nth-child(2){
+      margin: .5rem 2rem
+    }
+  }
+}
+
+.profile-icon{
+  border-radius: $border-radius-icon;
+  object-fit: cover;
+  border: 2px solid $viridian-green;
+  img{
+    border-radius: $border-radius-icon;
+  }
+  Image{
+    border-radius: $border-radius-icon;
+  }
+}
+
+.spinner {
+  animation: spinner 1s linear infinite;
+  width: 1rem;
+}
+
+@keyframes spinner {
+  0%{transform: rotate(0deg)}
+  100%{transform: rotate(359deg)}
+}
+
 .action-bar{
   @include flex(column, jc, ac);
 }
@@ -52,6 +113,10 @@ body{
   padding: .5rem 1rem;
   margin: 1rem;
   position: relative;
+  &-head{
+    @include flex(row, space-between, center);
+    margin: 1rem 0;
+  }
   &-title{
     font-family: "Poppins", sans-serif;
     margin: 0;
@@ -59,6 +124,7 @@ body{
   &-desc{
     @extend .question-card-title;
     font-family: "Montserrat", sans-serif;
+    margin: 1rem 0;
   }
   &-image-wrapper{
     @include flex(row, center, center);
@@ -77,13 +143,15 @@ body{
     }
   }
 
-  .interaction-row{
-    @include flex(row, space-evenly, ac);
-    position:absolute;
-    right: 1rem;
-    bottom: 1rem;
+  .interaction-row-wrapper{
+    @include flex(row, space-between, center);
+    width: 90%;
+    margin:0 auto;
   }
 
+  .interaction-row{
+    @include flex(row, space-evenly, center);
+  }
 }
 
 
@@ -143,21 +211,21 @@ body{
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Material ui                                              │
 //  ╰──────────────────────────────────────────────────────────╯
-// .MuiInput-root {
-//   color: white;
-// }
+.MuiInput-root {
+  color: white;
+}
 
-// .MuiInputBase-root {
-//   color: white;
-// }
+.MuiInputBase-root {
+  color: white;
+}
 
-// .MuiInputLabel-root {
-//   color: white;
-// }
+.MuiInputLabel-root {
+  color: white;
+}
 
-// .MuiButtonBase-root {
-//   color: white; 
-// }
+.MuiButtonBase-root {
+  color: white; 
+}
 
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Buttons                                                  │
@@ -189,6 +257,21 @@ body{
   font-size: .9rem;
   border:none; 
   outline:none;
+  &-unstyled{
+    border:none; 
+    outline:none;
+    background: none;
+    color: unset;
+    width: unset;
+    height: unset;
+    font-size: unset;
+  }
+  &-icon{
+    @extend .btn;
+  border: 2px solid $viridian-green;
+  background: none;
+    width: max-content;
+  }
   &-warn{
     @extend .btn;
     padding: .3rem;
@@ -206,11 +289,11 @@ body{
   &-selected{
     border-radius: $border-radius;
     padding: .5rem;
-    border: 1px solid white;
-    background-color: $viridian-green;
+    border: 2px solid ;
   }
   &-text{
     @extend .answer-selection-selected;
+    border: none;
     border-color: $viridian-green;
   }
 }

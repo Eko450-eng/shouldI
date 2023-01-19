@@ -9,12 +9,12 @@ async function getCollection() {
 }
 
 export default async function CardComponent() {
-  const { items } = await getCollection() as IApiFetchCall
+  let { items } = await getCollection() as IApiFetchCall
 
   return (
     <>
       {
-        items.map((i, index) => <Card key={index} props={{ i }} />)
+        items.map((question, index) => <Card key={index} props={{ question }} />)
       }
     </>
   )

@@ -9,6 +9,8 @@ export const login = async (userName: string, password: string) => {
 
 export const signup = async (data: IUserData) => {
   await pb.collection('users').create(data);
+  if (!pb.authStore.isValid)
+    pb.collection("users").authWithPassword(data.username, data.password)
   await pb.collection('users').requestVerification(data.email);
   return true
 }

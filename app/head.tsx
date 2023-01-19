@@ -4,7 +4,7 @@ export default function Head() {
       <title>Should I?</title>
       <link rel="manifest" href="/manifest.json" />
       <meta name="description" content="Let other people help you choose" />
-      <link rel="apple-touch-icon" href="/documentinatorLogo-192.png"></link>
+      <link rel="apple-touch-icon" href="/favicon.ico"></link>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       <meta name="HandheldFriendly" content="true" />
 

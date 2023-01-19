@@ -1,22 +1,54 @@
 'use client'
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import pb from "app/(pb_functions)"
+import { IQuestion } from "interfaces/interfaces"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import Buttons from "./(buttons)"
 import ImageComponent from "./(imageComponent)"
 import InteractionsRow from "./(InteractionsRow)"
 
-interface InterfaceProps { i: any }
+interface InterfaceProps { question: IQuestion }
 
 export default function card({ props }: { props: InterfaceProps }) {
-  const { i } = props
-  const image1 = `${process.env.NEXT_PUBLIC_DBURL}/api/files/${i.collectionId}/${i.id}/${i.image1}`
-  const image2 = `${process.env.NEXT_PUBLIC_DBURL}/api/files/${i.collectionId}/${i.id}/${i.image2}`
+  const { question } = props
+  const [deleteVisible, setDeleteVisible] = useState<boolean>(false)
+  const router = useRouter()
+
+  const image1 = `${process.env.NEXT_PUBLIC_DBURL}/api/files/${question.collectionId}/${question.id}/${question.image1}`
+  const image2 = `${process.env.NEXT_PUBLIC_DBURL}/api/files/${question.collectionId}/${question.id}/${question.image2}`
+
+  // Check if the user has permission to delete
+  const canDelete = () => {
+    if (pb.authStore.isValid && (question.owner == pb.authStore.model!.id || pb.authStore.model!.role > 9)) setDeleteVisible(true)
+  }
+
+  useEffect(() => {
+    canDelete()
+  }, [pb.authStore.model])
 
   return (
     <div className="question-card">
-      <h2 className="question-card-title">{i.title}</h2>
-      <p className="question-card-desc">{i.desc ? i.desc : ""}</p>
-      <ImageComponent props={{ i, image1, image2 }} />
-      <Buttons i={i} />
-      <InteractionsRow question={i.id} />
+      <div className="question-card-head">
+        <h2 className="question-card-title">{question.title}</h2>
+        {
+          deleteVisible &&
+          <button
+            className="btn-icon"
+            onClick={() => {
+              pb.collection("questions").delete(question.id)
+              router.refresh()
+            }}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        }
+      </div>
+      <ImageComponent props={{ question, image1, image2 }} />
+      <p className="question-card-desc">{question.desc ? question.desc : ""}</p>
+      <Buttons question={question} />
+      <InteractionsRow question={question.id} />
     </div>
   )
 }

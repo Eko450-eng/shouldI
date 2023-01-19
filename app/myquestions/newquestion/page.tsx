@@ -6,19 +6,6 @@ import { IQuestionSimplified } from '../../../interfaces/interfaces'
 import createNew from './(logic)'
 import { useRouter } from 'next/navigation'
 import { Button } from '@mui/material'
-import { createTheme } from '@mui/material'
-
-const style = createTheme({
-  components: {
-    MuiInputBase: {
-      styleOverrides: {
-        input: {
-          color: 'white',
-        }
-      }
-    }
-  }
-})
 
 export default function Page() {
   const router = useRouter()
@@ -31,40 +18,40 @@ export default function Page() {
     title: "",
   })
 
+
   return (
     <div>
       <div className="flex-center">
         <p>Ask a question</p>
-
         <TextField
           className="white"
-          sx={{ label: { color: "white" } }}
-          onChange={(v) => setQuestion({ ...question, title: v.target.value })}
+          sx={{ input: { color: "white" }, label: { color: "white" } }}
+          onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, title: v.target.value })}
           value={question.title}
-          label="Title" variant="outlined" />
+          label="Title" />
 
         <TextField
-          sx={{ label: { color: "white" } }}
+          sx={{ input: { color: "white" }, label: { color: "white" } }}
           className="white"
-          onChange={(v) => setQuestion({ ...question, desc: v.target.value })}
+          onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, desc: v.target.value })}
           value={question.desc}
-          label="Description" variant="outlined" />
+          label="Description" />
 
 
         <div className="flex-center row">
           <TextField
-            sx={{ label: { color: "white" } }}
+            sx={{ input: { color: "white" }, label: { color: "white" } }}
             className="white"
-            onChange={(v) => setQuestion({ ...question, optionNameOne: v.target.value })}
+            onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameOne: v.target.value })}
             value={question.optionNameOne}
-            label="Answer one" variant="outlined" />
+            label="Answer one" />
 
           <TextField
-            sx={{ label: { color: "white" } }}
+            sx={{ input: { color: "white" }, label: { color: "white" } }}
             className="white"
-            onChange={(v) => setQuestion({ ...question, optionNameTwo: v.target.value })}
+            onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameTwo: v.target.value })}
             value={question.optionNameTwo}
-            label="Answer two" variant="outlined" />
+            label="Answer two" />
         </div>
 
         <div className="flex-center row">
@@ -74,6 +61,7 @@ export default function Page() {
             component="label"
           >
             Upload first image
+            {/* To-Do change any to correct typ */}
             <input type="file" hidden name="file" onChange={(v: any) => setQuestion({ ...question, image1: v.target.files[0] })} />
           </Button>
 
@@ -89,14 +77,10 @@ export default function Page() {
 
         <button
           className="btn"
-          onClick={() => createNew(question).then(
-            (e) => {
-              if (e) router.back()
-              else {
-                return
-              }
-            }
-          )}>
+          onClick={() => {
+            createNew(question)
+            router.push("/")
+          }}>
           Create
         </button>
       </div>

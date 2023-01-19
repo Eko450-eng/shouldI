@@ -2,7 +2,7 @@ import pb from "../../(pb_functions)"
 import { IQuestionSimplified } from "../../../interfaces/interfaces"
 
 const formData = new FormData()
-const arr = ['{ "voted": [ "" ], "voters": [ [] ] } ']
+const voters = ['{ "voted": [ "" ], "voters": [ [] ] } ']
 
 export default async function createNew(question: IQuestionSimplified) {
   try {
@@ -17,7 +17,7 @@ export default async function createNew(question: IQuestionSimplified) {
     if (question.image2) formData.append("image2", question.image2)
     formData.append("answerOne", "0")
     formData.append("answerTwo", "0")
-    formData.append("voters", arr[0])
+    formData.append("voters", voters[0])
 
     await pb.collection("questions").create(formData)
     return true

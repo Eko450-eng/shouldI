@@ -1,6 +1,7 @@
 'use client'
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import pb from "../../(pb_functions)";
 import { IQuestion } from "../../../interfaces/interfaces";
@@ -10,6 +11,7 @@ export default function InteractionsRow({ question }: { question: string }) {
   const [likes, setLikes] = useState<number>(0)
   const [data, setData] = useState<IQuestion>()
   const user = pb.authStore.model
+  const router = useRouter()
 
   //Get and set the data
   async function fetchData() {
@@ -33,13 +35,21 @@ export default function InteractionsRow({ question }: { question: string }) {
     setUp()
   }, [])
 
-  useEffect(() => {
+  function likeCount() {
     if (!data) return
     setLikes(data?.likers.length)
+  }
+
+  useEffect(() => {
+    likeCount()
     didLike()
   }, [data])
 
   async function like() {
+    fetchData()
+    setUp()
+    likeCount()
+    didLike()
     if (!user || !data) return
     if (liked) {
       const myLike = data.likers.find((e: string) => e !== user.id)
@@ -58,10 +68,15 @@ export default function InteractionsRow({ question }: { question: string }) {
   }
 
   return (
-    <div
-      onClick={like}
-      className="interaction-row">
-      <p>{likes} <FontAwesomeIcon icon={faHeart} color={`${liked ? "#FE0034" : "white"}`} /></p>
+    <div className="interaction-row-wrapper">
+      <button aria-label="comment section" className="btn-unstyled" onClick={() => router.push(`/questions/${data && data.id}`)}>
+        <FontAwesomeIcon icon={faComment} />
+      </button>
+      <button
+        onClick={like}
+        className="interaction-row btn-unstyled">
+        <p>{likes} <FontAwesomeIcon icon={faHeart} color={`${liked ? "#FE0034" : "white"}`} /></p>
+      </button>
     </div>
   )
 }

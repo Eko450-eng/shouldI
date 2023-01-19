@@ -1,12 +1,22 @@
-export interface voter extends Array<any> {
+export interface IVoter extends Array<any> {
   name: string
   id: string
   vote: number
 }
 
-export interface voters {
+export interface IVoters {
   voted: string[]
-  voters: voter
+  voters: IVoter
+}
+
+export interface IComment {
+  user: string,
+  message: string,
+  thread: any
+}
+
+export interface IComments {
+  comments: IComment[]
 }
 
 export interface IApiFetchCall {
@@ -41,8 +51,9 @@ export interface IQuestion extends Object {
   answerTwo: number
   optionNameOne: string
   optionNameTwo: string
-  voters: voters
+  voters: IVoters
   likers: string[]
+  comments?: IComments
 }
 
 export interface IPBRecord {
@@ -56,5 +67,6 @@ export interface IUserData {
   password: string,
   passwordConfirm: string,
   name: string,
-  avatar?: ImageData
+  image?: any
 }
+
