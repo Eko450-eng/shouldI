@@ -3,7 +3,7 @@ import '../../styles/globals.scss'
 import Card from './(components)/(card)';
 
 async function getCollection() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DBURL}/api/collections/questions/records`, { cache: 'no-store' })
+  const res = await fetch(`${process.env.NEXT_PUBLIC_DBURL}/api/collections/questions/records`, { cache: "no-store", next: { revalidate: 1 } })
   const returnValue = await res.json()
   return returnValue
 }

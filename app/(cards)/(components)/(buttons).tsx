@@ -17,15 +17,16 @@ export default function Buttons({ question }: { question: IQuestion }) {
   const router = useRouter()
 
   // Find what the user has voted for
-  const votedFor = question.voters.voters.find((vote: IVoter) => {
-    if (!vote || !pb.authStore.model) return
-    return vote.id == pb.authStore.model.id
-  })
+  function displayAll() {
+    const votedFor = question.voters.voters.find((vote: IVoter) => {
+      if (!vote || !pb.authStore.model) return
+      return vote.id == pb.authStore.model.id
+    })
 
-  useEffect(() => {
     if (votedFor && pb.authStore.isValid) {
       //Show the users what others have voted for
       setVisibleVotes(true)
+
       // Mark users vote
       switch (votedFor.vote) {
         case 1:
@@ -36,6 +37,10 @@ export default function Buttons({ question }: { question: IQuestion }) {
           return
       }
     }
+  }
+
+  useEffect(() => {
+    displayAll()
   }, [])
 
   function Btn({ props }: { props: IBtn }) {
@@ -45,7 +50,7 @@ export default function Buttons({ question }: { question: IQuestion }) {
         className={`${voted == vote ? "btn answer-selection-selected" : "btn answer-selection-text"}`}
         onClick={() => {
           if (!pb.authStore.model) return
-          answer(pb.authStore.model, question.id, 1)
+          answer(pb.authStore.model, question.id, vote)
           router.refresh()
         }}>
         {name} {visibleVotes ? votes : ""}

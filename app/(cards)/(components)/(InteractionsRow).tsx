@@ -65,6 +65,7 @@ export default function InteractionsRow({ question }: { question: string }) {
     }
     setLikes(data.likers.length)
     didLike()
+    router.refresh()
   }
 
   return (
