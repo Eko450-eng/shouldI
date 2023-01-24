@@ -1,7 +1,7 @@
 import pb from "../../(pb_functions)"
 import { IQuestionSimplified } from "../../../interfaces/interfaces"
 
-const formData = new FormData()
+let formData = new FormData()
 const voters = ['{ "voted": [ "" ], "voters": [ [] ] } ']
 
 export default async function createNew(question: IQuestionSimplified) {
@@ -20,6 +20,7 @@ export default async function createNew(question: IQuestionSimplified) {
     formData.append("voters", voters[0])
 
     await pb.collection("questions").create(formData)
+    formData = new FormData()
     return true
   } catch (e) {
     return false

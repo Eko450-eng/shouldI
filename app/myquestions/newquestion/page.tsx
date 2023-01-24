@@ -78,8 +78,9 @@ export default function Page() {
         <button
           className="btn"
           onClick={() => {
-            createNew(question)
-            router.push("/")
+            createNew(question).then(() => {
+              router.push("/")
+            })
           }}>
           Create
         </button>

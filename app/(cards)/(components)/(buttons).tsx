@@ -50,8 +50,9 @@ export default function Buttons({ question }: { question: IQuestion }) {
         className={`${voted == vote ? "btn answer-selection-selected" : "btn answer-selection-text"}`}
         onClick={() => {
           if (!pb.authStore.model) return
-          answer(pb.authStore.model, question.id, vote)
-          router.refresh()
+          answer(pb.authStore.model, question.id, vote).then(
+            (res: any) => pb.collection("questions").update(question.id, res).then((res) => router.refresh())
+          )
         }}>
         {name} {visibleVotes ? votes : ""}
       </button>

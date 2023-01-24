@@ -21,12 +21,12 @@ export default async function answer(user: Record | Admin, question: string, ans
     }
     const votersList = [currentVoters, me]
 
-    pb.collection("questions").update(question, {
+    return {
       answerOne: newAnswer, voters: {
         voted: votedList,
         voters: votersList
       }
-    })
+    }
 
   } else if (answer == 2) {
     const newAnswer = r.answerTwo + 1
@@ -37,12 +37,12 @@ export default async function answer(user: Record | Admin, question: string, ans
     }
 
     const votersList = [currentVoters, me]
-    pb.collection("questions").update(question, {
+    return {
       answerTwo: newAnswer, voters: {
         voted: votedList,
         voters: votersList
       }
-    })
+    }
   }
 
 }
