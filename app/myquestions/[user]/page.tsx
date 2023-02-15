@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { user: string } }) {
   const { items } = await getCollection(params.user)
 
   return (
-    <div>
+    <div className="card-wrapper">
       {items.map((question: IQuestion, index: number) => {
         return <Card key={index} props={{ question }} />
       })}

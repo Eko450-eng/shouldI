@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { question: string } })
   const { items } = await getComments(params.question)
 
   return (
-    <div>
+    <div className="flex-center">
       <Card props={{ question }} />
       <div className="commentbox-wrapper">
         {
