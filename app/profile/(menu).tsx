@@ -50,6 +50,7 @@ export default function Menu({ close, user }: { close: (t: boolean) => void, use
     return (
       <List key={key}>
         <ListItem
+          className="menu-items"
           key={key}
           onClick={() => {
             if (!link.function) return

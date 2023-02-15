@@ -13,7 +13,7 @@ export default function ActionBar() {
 
   return (
     <div className="action-bar">
-      <div className="flex-center row space-between">
+      <div className="drawer-profile">
         <Link className="link-btn" href="/">
           <h2>Should I?</h2>
         </Link>
@@ -21,6 +21,7 @@ export default function ActionBar() {
       </div>
 
       <Drawer
+        className="menu-mobile"
         PaperProps={{
           sx: {
             backgroundColor: "hsla(197, 100%, 5%, 1)",
@@ -41,6 +42,12 @@ export default function ActionBar() {
           user={pb.authStore.model ? pb.authStore.model.id : undefined}
         />
       </Drawer>
+      <div className="menu-desktop">
+        <Menu
+          close={(t: boolean) => setOpenDrawer(t)}
+          user={pb.authStore.model ? pb.authStore.model.id : undefined}
+        />
+      </div>
     </div>
   )
 }

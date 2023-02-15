@@ -52,6 +52,44 @@ body{
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Components                                               │
 //  ╰──────────────────────────────────────────────────────────╯
+.drawer-profile{
+  @extend .flex-center;
+  @extend .row;
+  @extend .space-between;
+  @media(min-width:980px){
+    display: none !important;
+  }
+}
+
+.menu-desktop{
+  display: none;
+  @media(min-width:980px){
+    @include flex(column, flex-start, flex-end);
+    position: absolute;
+    right: 0rem;
+    top: 0;
+    height: 100%;
+    background-color: $blue-sapphire;
+    text-align: right;
+    padding: 2rem 0;
+    .menu-items{
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      transition: all ease-in .2.5s;
+      transition: background-position ease-in .5s;
+      background: linear-gradient(to right, $viridian-green 50%, $blue-sapphire 50%);
+      background-size: 200% 100%;
+      background-position: right bottom;
+      &:hover{
+        background-position: left bottom;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+    }
+  }
+}
+
+
 
 main, .action-bar{
   @media(min-width: 980px){
