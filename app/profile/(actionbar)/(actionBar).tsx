@@ -25,9 +25,11 @@ export default function ActionBar() {
   const [avatar, setAvatar] = useState<string>(placeholder)
   const router = useRouter()
 
-  window.addEventListener("resize", (e: any) => {
-    if (!e.target) return
-    setWindowWidth(e.target.innerWidth < 980 ? true : false)
+  useEffect(() => {
+    window.addEventListener("resize", (e: any) => {
+      if (!e.target) return
+      setWindowWidth(e.target.innerWidth < 980 ? true : false)
+    })
   })
 
   useEffect(() => {
