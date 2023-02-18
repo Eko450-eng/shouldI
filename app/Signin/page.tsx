@@ -34,10 +34,17 @@ export default function Login() {
     formData.append("email", email)
     formData.append("emailVisibility", "true")
     formData.append("password", password)
-    formData.append("passwordConfirm", confirmPassword)
     formData.append("name", userName)
     formData.append("image", image ? image.image : null)
-    await pb.collection("users").create(formData)
+    await pb.collection("users").create({
+      "username": userName,
+      "email": email,
+      "emailVisibility": true,
+      "password": password,
+      "passwordConfirm": confirmPassword,
+      "name": userName,
+      "role": 1
+    })
   }
 
 
@@ -80,13 +87,12 @@ export default function Login() {
                 placeholder="Confirm password"
               />
 
-              <Button
-                component="label"
-              >
-                Upload first image
-                {/* To-Do Figure this out */}
-                <input type="file" hidden name="file" onChange={(v: any) => setImage({ image: v.target.files[0] })} />
-              </Button>
+              {/* <Button */}
+              {/*   component="label" */}
+              {/* > */}
+              {/*   Upload first image */}
+              {/*   <input type="file" hidden name="file" onChange={(v: any) => setImage({ image: v.target.files[0] })} /> */}
+              {/* </Button> */}
               <Button onClick={() => signupHandler()} >Register</Button>
             </>
             :
