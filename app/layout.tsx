@@ -1,5 +1,9 @@
+'use client'
 import '../styles/globals.scss'
+import Background from './Background'
 import ActionBar from './profile/(actionbar)/(actionBar)'
+import { MantineProvider } from '@mantine/core'
+
 
 export default function RootLayout({
   children,
@@ -10,8 +14,13 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body>
-        <ActionBar />
-        {children}
+        <MantineProvider theme={{
+          colorScheme: "dark"
+        }} withNormalizeCSS withGlobalStyles>
+          <ActionBar />
+          {/* <Background /> */}
+          {children}
+        </MantineProvider>
       </body>
     </html>
   )

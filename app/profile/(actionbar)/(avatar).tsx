@@ -1,5 +1,5 @@
 'use client'
-import { Button } from "@mui/material";
+import { Button } from '@mantine/core'
 import pb from "../../(pb_functions)";
 import Image from 'next/image'
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ export default function AvatarIcon({ openDrawer }: { openDrawer: (t: boolean) =>
 
   return (
     <div>
-      <Button onClick={() => openDrawer(true)}>
+      <Button className="btn-icon" variant="subtle" size="lg" compact onClick={() => openDrawer(true)}>
         <Image
           alt={`Avatar Image of the user`}
           className="profile-icon"

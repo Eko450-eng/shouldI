@@ -1,10 +1,9 @@
 import CardComponent from './(cards)/(CardComponent)'
-
 export default async function Page() {
 
-	return (
-		<main>
-			<CardComponent />
-		</main>
-	)
+  return (
+    <main>
+      <CardComponent />
+    </main>
+  )
 }

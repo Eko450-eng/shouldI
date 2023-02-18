@@ -2,12 +2,11 @@
 import '../../../styles/globals.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
-import { TextField } from '@mui/material'
 import { useState } from 'react'
 import { IQuestionSimplified } from '../../../interfaces/interfaces'
 import createNew from './(logic)'
 import { useRouter } from 'next/navigation'
-import { Button } from '@mui/material'
+import { Input, Button } from '@mantine/core'
 
 export default function Page() {
   const router = useRouter()
@@ -27,33 +26,30 @@ export default function Page() {
         <p>Ask a question</p>
         <div className="flex-center desktop-row">
 
-          <TextField
-            sx={{ input: { color: "white" }, label: { color: "white" } }}
+          <Input
             onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, title: v.target.value })}
             value={question.title}
-            label="Title" />
+            placeholder="Title" />
 
-          <TextField
+          <Input
             sx={{ input: { color: "white" }, label: { color: "white" } }}
             onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, desc: v.target.value })}
             value={question.desc}
-            label="Description" />
+            placeholder="Description" />
 
         </div>
 
         <div className="flex-center desktop-row">
           <div className="row">
-            <TextField
+            <Input
               sx={{ input: { color: "white" }, label: { color: "white" } }}
               className="file-upload-btn"
               onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameOne: v.target.value })}
               value={question.optionNameOne}
-              variant="standard"
-              label="Answer one" />
+              placeholder="Answer one" />
 
             <Button
               className="file-upload-btn"
-              variant="text"
               component="label"
             >
 
@@ -65,15 +61,13 @@ export default function Page() {
 
           <div className="row">
 
-            <TextField
+            <Input
               sx={{ input: { color: "white" }, label: { color: "white" } }}
-              variant="standard"
               onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameTwo: v.target.value })}
               value={question.optionNameTwo}
-              label="Answer two" />
+              placeholder="Answer two" />
 
             <Button
-              variant="text"
               component="label"
             >
               <FontAwesomeIcon icon={faFile} />

@@ -70,3 +70,15 @@ export interface IUserData {
   image?: any
 }
 
+export interface IDrawer {
+  open: boolean;
+  position: "right" | "left";
+  size: boolean;
+}
+
+export interface MenuItem {
+  title: string
+  icon: React.ReactNode
+  function?: () => void
+}
+

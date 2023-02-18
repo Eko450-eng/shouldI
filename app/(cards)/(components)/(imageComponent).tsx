@@ -1,8 +1,9 @@
 'use client'
-import { Modal, Fade } from '@mui/material'
 import { useState } from 'react'
 import { IQuestion } from '../../../interfaces/interfaces'
 import Image from 'next/image'
+import { Modal } from '@mantine/core'
+import zIndex from '@mui/material/styles/zIndex'
 
 interface InterfaceProps {
   question: IQuestion
@@ -28,20 +29,26 @@ export default function ImageComponent({ props }: { props: InterfaceProps }) {
   return (
     <>
       <Modal
-        open={open.open}
+        opened={open.open}
         onClose={closeImage}
-        closeAfterTransition
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        fullScreen
+        closeOnClickOutside
+        withCloseButton
+        closeButtonLabel="CLOSE"
+        centered
       >
-        <Fade in={open.open} timeout={500}>
-          <Image
-            alt="Fullscreen image for preview"
-            width={500}
-            height={500}
-            style={{ maxHeight: "90%", maxWidth: "90%" }} className="fullscreen-image"
-            src={open.selectedImage!} />
-        </Fade>
+        {/* <Fade in={open.open} timeout={500}> */}
+        <Image
+          onClick={closeImage}
+          className="fullscreen-modal-image"
+          alt="Fullscreen image for preview"
+          fill
+          style={{
+            objectFit: "contain",
+            zIndex: "-1"
+          }}
+          src={open.selectedImage!} />
+        {/* </Fade> */}
       </Modal>
 
       {/* could be done way nicer probably... but ain't nobody got time for that */}

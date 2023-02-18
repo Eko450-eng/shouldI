@@ -3,11 +3,8 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import answer from "../(logic)"
 import pb from "../../(pb_functions)"
-import { IQuestion, IVoter } from "interfaces/interfaces"
-import { assign, createMachine, interpret, StateMachine } from "xstate";
-import { useMachine } from "@xstate/react";
-import { stat } from "fs"
-import voteButtonPromise from "app/(states)/UserAuthState"
+import { IQuestion } from "interfaces/interfaces"
+import { Button } from '@mantine/core'
 
 interface IBtn {
   name: string
@@ -15,32 +12,23 @@ interface IBtn {
   vote: 1 | 2
 }
 
-interface VoteStates {
-  id: number;
-  done: boolean;
-  text: string;
-}
-
-const userAuthStateInter = interpret(voteButtonPromise)
-  .start()
-
 export default function Buttons({ question }: { question: IQuestion }) {
-  const [state, send] = useMachine(voteButtonPromise);
+  const [currentState, setCurrentState] = useState<string>("pending");
   const [voteValue, setVoteValue] = useState<Number>(0);
   const router = useRouter()
 
 
   async function checkIfAuthenticated() {
     if (!pb.authStore.isValid || !pb.authStore.model?.id) return
-    userAuthStateInter.send("AUTHENTICATED")
+    setCurrentState("canVote")
     checkIfVoted()
   }
 
   function checkIfVoted() {
-    question.voters.voters.filter((k, v) => {
+    question.voters.voters.filter((k) => {
       if (k.name == pb.authStore.model!.name) {
-        userAuthStateInter.send("DIDVOTE")
-        userAuthStateInter.send(`VOTE${k.vote}`)
+        setCurrentState("DIDVOTE")
+        setCurrentState(`VOTE${k.vote}`)
         setVoteValue(k.vote)
       }
     });
@@ -54,27 +42,33 @@ export default function Buttons({ question }: { question: IQuestion }) {
     const { name, votes, vote } = props
     const displayText: String = `${name} ${voteValue > 0 ? votes : ""}`
 
-    const highlight: boolean = vote == voteValue 
+    const highlight: boolean = vote == voteValue
 
     return (
-      <button
-        className={
-           highlight ? "btn answer-selection-selected" : "btn answer-selection-text"
-        }
+      <Button
+        sx={{
+          border: highlight ? "1px solid white"
+            : "none"
+        }}
+        color={highlight ? "indigo" : "red"}
         onClick={() => {
-          if (!pb.authStore.model || state.value != "CANVOTE") return
+          if (!pb.authStore.model || currentState !== "canVote") return
           answer(pb.authStore.model, question.id, vote).then(
-            (res: any) => pb.collection("questions").update(question.id, res).then((res) => router.refresh())
+            (res: any) => {
+              console.log(res)
+              pb.collection("questions").update(question.id, res)
+                .then(() => router.refresh())
+            }
           )
         }}>
         {displayText}
-      </button>
+      </Button>
     )
   }
 
 
   return (
-    <div className={`answer-selection`}>
+    <div className={`flex-center row`}>
       <Btn props={{ name: question.optionNameOne, votes: question.answerOne, vote: 1 }} />
       <Btn props={{ name: question.optionNameTwo, votes: question.answerTwo, vote: 2 }} />
     </div>

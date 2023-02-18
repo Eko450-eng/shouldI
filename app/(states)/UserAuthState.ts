@@ -13,11 +13,12 @@ const voteButtonPromise = createMachine({
     },
     "loggedIn": {
       "on": {
-        "DIDNOTVOTE": {
-          "target": "canVote"
-        },
-
         "DIDVOTE": { "target": "didVote" }
+      },
+      after: {
+        "250": {
+          "target": "canVote"
+        }
       }
     },
     "didVote": {

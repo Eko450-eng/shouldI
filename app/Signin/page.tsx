@@ -1,11 +1,10 @@
 'use client'
 import { useRouter } from "next/navigation";
-import { ToggleButton, ToggleButtonGroup, Button } from "@mui/material";
-import { TextField } from '@mui/material'
 import { useState } from 'react'
 import { login } from './(logic)'
-import pb from '../(pb_functions)'
+import { MantineProvider, Input, Button } from '@mantine/core'
 import '../../styles/globals.scss'
+import pb from '../(pb_functions)'
 
 interface ImageType {
   // To-Do Figure this out
@@ -22,10 +21,12 @@ export default function Login() {
   const router = useRouter()
 
   pb.collection('questions').subscribe('*', function() {
-    router.refresh()
+    setTimeout(() => {
+      router.refresh()
+    }, 250);
   });
 
-  const loginViewToggle = (e: React.MouseEvent<HTMLElement>, v: string) => setLoginView(v)
+
   const loginHandler = () => login(userName, password).then(() => router.push("/"))
   const signupHandler = async () => {
     const formData = new FormData()
@@ -40,71 +41,70 @@ export default function Login() {
   }
 
 
-
   return (
     <div className="flex-center">
-      <form className="flex-center" onSubmit={(e) => e.preventDefault()}>
+      <MantineProvider theme={{
+        colorScheme: "dark"
+      }} withNormalizeCSS withGlobalStyles>
 
-        <p>Please {loginView}</p>
-        {loginView == "register" &&
+        <form className="flex-center" onSubmit={(e) => e.preventDefault()}>
+          <p>Please {loginView}</p>
+          {loginView == "register" &&
 
-          <TextField
-            sx={{ input: { color: "white" }, label: { color: "white" } }}
-            className="white"
-            onChange={(v) => setEmail(v.target.value)}
-            value={email}
-            label="Email" variant="outlined" />
-        }
-        <TextField
-          sx={{ input: { color: "white" }, label: { color: "white" } }}
-          onChange={(v) => setUserName(v.target.value)}
-          value={userName}
-          label="Username" variant="outlined" />
-        <TextField
-          sx={{ input: { color: "white" }, label: { color: "white" } }}
-          onChange={(v) => setpassword(v.target.value)}
-          value={password}
-          type="password"
-          label="Password" variant="outlined" />
+            <Input
+              className="white"
+              onChange={(v) => setEmail(v.target.value)}
+              value={email}
+              placeholder="Email"
+            />
+          }
+          <Input
+            onChange={(v) => setUserName(v.target.value)}
+            value={userName}
+            placeholder="Username"
+          />
+          <Input
+            onChange={(v) => setpassword(v.target.value)}
+            value={password}
+            type="password"
+            placeholder="Password"
+          />
 
 
-        {loginView == "register" ?
-          <>
-            <TextField
-              sx={{ input: { color: "white" }, label: { color: "white" } }}
-              onChange={(v) => setConfirmPassword(v.target.value)}
-              value={confirmPassword}
-              type="password"
-              label="Confirm password" variant="outlined" />
+          {loginView == "register" ?
+            <>
+              <Input
+                onChange={(v) => setConfirmPassword(v.target.value)}
+                value={confirmPassword}
+                type="password"
+                placeholder="Confirm password"
+              />
 
-            <Button
-              className="btn"
-              variant="contained"
-              component="label"
-            >
-              Upload first image
-              {/* To-Do Figure this out */}
-              <input type="file" hidden name="file" onChange={(v: any) => setImage({ image: v.target.files[0] })} />
-            </Button>
-            <button className="btn" onClick={() => signupHandler()} >Register</button>
-          </>
-          :
-          <button className="btn" onClick={() => loginHandler()} >Login</button>
-        }
-      </form>
+              <Button
+                component="label"
+              >
+                Upload first image
+                {/* To-Do Figure this out */}
+                <input type="file" hidden name="file" onChange={(v: any) => setImage({ image: v.target.files[0] })} />
+              </Button>
+              <Button onClick={() => signupHandler()} >Register</Button>
+            </>
+            :
+            <Button onClick={() => loginHandler()} >Login</Button>
+          }
+        </form>
 
-      {/* To-Do Toggle between login and register view */}
-      <ToggleButtonGroup
-        value={loginView}
-        onChange={loginViewToggle}
-        exclusive
-        aria-label="Platform"
-        color="primary"
-      >
-        <ToggleButton
-          value="login">Login</ToggleButton>
-        <ToggleButton value="register">Register</ToggleButton>
-      </ToggleButtonGroup>
+        <div
+          className="flex-center row"
+        >
+          <Button
+            value="register"
+            color={loginView === "register" ? "green" : "orange"}
+            onClick={() => setLoginView(loginView === "register" ? "login" : "register")}>
+            {loginView === "register" ? "Already have an account?" : "New User?"}
+          </Button>
+        </div>
+      </MantineProvider>
     </div >
   )
 }

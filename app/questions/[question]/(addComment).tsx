@@ -1,6 +1,6 @@
 'use client'
-import { TextField } from "@mui/material"
 import pb from "app/(pb_functions)"
+import { Input, Button } from '@mantine/core'
 import { IComment } from "interfaces/interfaces"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -14,7 +14,7 @@ export default function AddComment({ id }: { id: string }) {
   })
 
   function setUser() {
-    if (!pb.authStore.model || !pb.authStore.model.username) setUser()
+    if (!pb.authStore.model || !pb.authStore.model.username) return
     setMessage({ ...message, user: pb.authStore.model!.username })
   }
 
@@ -28,24 +28,32 @@ export default function AddComment({ id }: { id: string }) {
     setMessage({ ...message, user: pb.authStore.model.username && pb.authStore.model.username })
     await pb.collection("comments").create(message)
     setMessage({ ...message, message: "" })
-    router.refresh()
+    router.push(`/questions/${id}`)
   }
 
+  useEffect(() => {
+    console.log(id)
+  }, [])
+
   return (
-    <form className="comment-input" onSubmit={(e) => e.preventDefault()}>
-      <TextField
-        className="white"
-        sx={{ input: { color: "white" }, label: { color: "white" } }}
-        value={message.message}
-        onChange={(v) => setMessage({ ...message, message: v.target.value })}
-        label="Message" variant="outlined" />
+    <>
+      {pb.authStore.isValid &&
+        <form className="flex-center row" onSubmit={(e) => e.preventDefault()}>
+          <Input
+            className="white"
+            sx={{ input: { color: "white" }, label: { color: "white" } }}
+            value={message.message}
+            onChange={(v) => setMessage({ ...message, message: v.target.value })}
+            placeholder="Message"
+          />
 
-      <button
-        className="btn"
-        type="submit"
-        onClick={handleSubmit}
+          <Button
+            type="submit"
+            onClick={handleSubmit}
 
-      >Send</button>
-    </form>
+          >Send</Button>
+        </form>
+      }
+    </>
   )
 }
