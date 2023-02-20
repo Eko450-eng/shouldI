@@ -1,3 +1,5 @@
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
+
 export interface IVoter extends Array<any> {
   name: string
   id: string
@@ -78,7 +80,7 @@ export interface IDrawer {
 
 export interface MenuItem {
   title: string
-  icon: React.ReactNode
+  icon: IconDefinition
   function?: () => void
 }
 

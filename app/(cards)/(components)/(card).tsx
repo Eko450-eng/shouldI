@@ -40,7 +40,7 @@ export default function card({ props }: { props: InterfaceProps }) {
               router.refresh()
             }}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <FontAwesomeIcon color="#e03131" icon={faTrash} />
           </ActionIcon>
         }
       </div>

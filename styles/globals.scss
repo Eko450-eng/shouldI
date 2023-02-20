@@ -49,11 +49,10 @@ $border-radius-icon: 100%;
 //  │ Base                                                     │
 //  ╰──────────────────────────────────────────────────────────╯
 body{
-  background-color: $rich-black-fogra-29;
-  color: white;
+  // background-color: $rich-black-fogra-29;
   font-family: "Montserrat", sans-serif;
-  height: 100vh;
 }
+
 
 .title{
   cursor: pointer;
@@ -66,90 +65,6 @@ body{
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Components                                               │
 //  ╰──────────────────────────────────────────────────────────╯
-.menu{
-  height: 100%;
-  // @media(min-width:980px){
-  //   display: none !important;
-  // }
-}
-.drawer-profile{
-  @include flex(row, space-between, center);
-}
-
-.drawer{
-  @include flex(column, space-between, center);
-  text-align: center;
-  .caret{
-    position: absolute;
-    bottom: 1vh;
-  }
-}
-
-.menu-items{
-  list-style-type: none;
-  &-description{
-    @include flex(row, flex-start, space-between);
-    div{
-      width: 1.5rem;
-    }
-  }
-}
-
-.menu-desktop{
-  @include flex(column, flex-start, flex-end);
-  align-items: center;
-  position: absolute;
-  left: 0rem;
-  top: 0;
-  height: 100%;
-  background-color: $blue-sapphire;
-  text-align: right;
-  padding: 2rem 0;
-  .menu-items{
-    text-decoration: none;
-    list-style-type: none;
-    cursor: pointer;
-    transition: all ease-in 2s;
-    transition: background-position ease-in .1s;
-    background: linear-gradient(to right, $viridian-green 50%, $blue-sapphire 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    padding: .5rem;
-    &:hover{
-      background-position: left bottom;
-      border-top-right-radius: 25px;
-      border-bottom-right-radius: 25px;
-      transform-origin: left;
-      z-index: 2;
-      transform: scale(1.2);
-    }
-  }
-
-
-  .title{
-    @extend .title;
-    margin: 0 auto;
-  }
-}
-
-.menu-desktop-collapsed{
-  @extend .menu-desktop;
-  .MuiBox-root{
-    @include flex(row, center, center);
-    width: 100%;
-  }
-  .menu-items-text{
-    display: none;
-  }
-}
-
-.no-display{
-  display:none;
-}
-
-.comment-input{
-  margin: 1rem  0;
-}
 
 .commentbox-wrapper{
   @media screen and (min-width: 980px) {
@@ -172,6 +87,10 @@ body{
       margin: .5rem 2rem
     }
   }
+
+  .comment-input{
+    margin: 1rem  0;
+  }
 }
 
 .profile-icon{
@@ -193,20 +112,18 @@ body{
   100%{transform: rotate(359deg)}
 }
 
-.action-bar{
-  @include flex(column, jc, ac);
-}
-
+//  ╭──────────────────────────────────────────────────────────╮
+//  │ Question card                                            │
+//  ╰──────────────────────────────────────────────────────────╯
 .card-wrapper{
   @include flex(column, center, center);
   flex-flow: row wrap;
+  @media screen and (min-width: 980px){
+    margin-left: 4rem;
+  }
 }
 
 .question-card{
-  @media(min-width: 980px){
-    width: 20%;
-  }
-  width: 80%;
   background: linear-gradient(129.88deg, $blue-sapphire 1.92%, rgba(0, 95, 115, 0.1) 103.45%);;
   border-radius: $border-radius;
   display: flex;
@@ -214,7 +131,6 @@ body{
   flex-direction: column;
   padding: .5rem 1rem;
   margin: 1rem;
-  position: relative;
 
   &-head{
     @include flex(row, space-between, center);
@@ -249,22 +165,6 @@ body{
       max-width: 100%;
     }
   }
-
-  .interaction-row-wrapper{
-    @include flex(row, space-between, center);
-    width: 90%;
-    margin:0 auto;
-  }
-
-  .interaction-row{
-    @include flex(row, space-evenly, center);
-  }
-}
-
-.refresh-icon{
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
 }
 
 //  ╭──────────────────────────────────────────────────────────╮
@@ -305,34 +205,9 @@ body{
   margin: 1rem auto;
 }
 
-.dark-bg{
-  background-color: $rich-black-fogra-29;
-}
-
-
 //  ╭──────────────────────────────────────────────────────────╮
-//  │ Material ui                                              │
+//  │ CursorAnimation                                          │
 //  ╰──────────────────────────────────────────────────────────╯
-.MuiInput-root {
-  color: white;
-}
-
-.MuiInputBase-root {
-  color: white;
-}
-
-.MuiInputLabel-root {
-  color: white;
-}
-
-.MuiButtonBase-root {
-  color: white; 
-}
-
-.MuiList-root{
-  padding: 0;
-}
-
 .cursor-animation{
   background: linear-gradient(159deg,  $rich-black-fogra-29 0%, $blue-sapphire 100%);
   opacity: 20%;
@@ -360,61 +235,62 @@ body{
 //  ╭──────────────────────────────────────────────────────────╮
 //  │ Buttons                                                  │
 //  ╰──────────────────────────────────────────────────────────╯
-.link-btn{
-  cursor: pointer;
-  text-decoration: none;
-  color: unset;
-  &-icon{
-    @include flex(row, center, center);
-    border-radius: $border-radius;
-    padding: .25rem;
-    background-color: $blue-sapphire;
-    width: 1rem;
-    height: 1rem;
-    * {
-      color: $rich-black-fogra-29;
-      width: 1rem;
-      height: 1rem;
-    }
-  }
-}
 
-.btn {
-  cursor: pointer;
-  border-radius: $border-radius;
-  background: linear-gradient(97.17deg, $blue-sapphire 0%, $viridian-green 100%);
-  color:white !important;
-  padding:.5rem 1rem;
-  font-family: "Poppins", sans-serif;
-  font-size: .9rem;
-  border:none; 
-  outline:none;
-  &-unstyled{
-    border:none; 
-    outline:none;
-    background: none;
-    color: unset;
-    width: unset;
-    height: unset;
-    font-size: unset;
-  }
-  &-icon{
-    @extend .btn;
-  border: 2px solid $viridian-green;
-  background: none;
-    width: max-content;
-    height: max-content;
-    border: none;
-  }
-  &-warn{
-    @extend .btn;
-    padding: .3rem;
-    font-size: .8rem;
-    background: linear-gradient(97.17deg, $rust 0%, $rufous 100%);
-  }
-  &-success{
-    @extend .btn-warn;
-    background: linear-gradient(97.17deg, $viridian-green 0%, $blue-sapphire 100%);
-  }
-}
+// .link-btn{
+//   cursor: pointer;
+//   text-decoration: none;
+//   color: unset;
+//   &-icon{
+//     @include flex(row, center, center);
+//     border-radius: $border-radius;
+//     padding: .25rem;
+//     // background-color: $blue-sapphire;
+//     width: 1rem;
+//     height: 1rem;
+//     * {
+//       color: $rich-black-fogra-29;
+//       width: 1rem;
+//       height: 1rem;
+//     }
+//   }
+// }
+
+// .btn {
+//   cursor: pointer;
+//   border-radius: $border-radius;
+//   // background: linear-gradient(97.17deg, $blue-sapphire 0%, $viridian-green 100%);
+//   color:white !important;
+//   padding:.5rem 1rem;
+//   font-family: "Poppins", sans-serif;
+//   font-size: .9rem;
+//   border:none; 
+//   outline:none;
+//   &-unstyled{
+//     border:none; 
+//     outline:none;
+//     // background: none;
+//     color: unset;
+//     width: unset;
+//     height: unset;
+//     font-size: unset;
+//   }
+//   &-icon{
+//     @extend .btn;
+//   border: 2px solid $viridian-green;
+//   // background: none;
+//     width: max-content;
+//     height: max-content;
+//     border: none;
+//   }
+//   &-warn{
+//     @extend .btn;
+//     padding: .3rem;
+//     font-size: .8rem;
+//     // background: linear-gradient(97.17deg, $rust 0%, $rufous 100%);
+//   }
+//   &-success{
+//     @extend .btn-warn;
+//     // background: linear-gradient(97.17deg, $viridian-green 0%, $blue-sapphire 100%);
+//   }
+// }
 

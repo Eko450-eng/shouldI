@@ -1,6 +1,7 @@
 'use client'
 import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ActionIcon, Text, Group } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import pb from "../../(pb_functions)";
@@ -69,15 +70,20 @@ export default function InteractionsRow({ question }: { question: string }) {
   }
 
   return (
-    <div className="interaction-row-wrapper">
-      <button aria-label="comment section" className="btn-unstyled" onClick={() => router.push(`/questions/${data && data.id}`)}>
+    <Group position="apart">
+      <ActionIcon onClick={() => router.push(`/questions/${data && data.id}`)}>
         <FontAwesomeIcon icon={faComment} />
-      </button>
-      <button
-        onClick={like}
-        className="interaction-row btn-unstyled">
-        <p>{likes} <FontAwesomeIcon icon={faHeart} color={`${liked ? "#FE0034" : "white"}`} /></p>
-      </button>
-    </div>
+      </ActionIcon>
+
+      <ActionIcon onClick={like} >
+        <Text sx={{ paddingRight: ".5rem" }}>
+          {likes}
+        </Text>
+        <Text>
+          <FontAwesomeIcon icon={faHeart} color={`${liked ? "#FE0034" : "white"}`} />
+        </Text>
+      </ActionIcon>
+
+    </Group>
   )
 }

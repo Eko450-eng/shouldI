@@ -46,11 +46,14 @@ export default function Buttons({ question }: { question: IQuestion }) {
 
     return (
       <Button
-        sx={{
+        sx={(theme) => ({
+          background: highlight ? theme.colors.nord_green[4] : theme.colors.nord_pink[3],
+          color: highlight ? theme.primaryColor : theme.white,
           border: highlight ? "1px solid white"
             : "none"
-        }}
-        color={highlight ? "indigo" : "red"}
+        })}
+
+
         onClick={() => {
           if (!pb.authStore.model || currentState !== "canVote") return
           answer(pb.authStore.model, question.id, vote).then(

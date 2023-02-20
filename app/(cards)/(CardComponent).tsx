@@ -4,7 +4,6 @@ import Loading from 'app/loading';
 import { useEffect, useState } from 'react';
 import { IQuestion } from '../../interfaces/interfaces';
 import '../../styles/globals.scss'
-import { MantineProvider } from '@mantine/core'
 import Card from './(components)/(card)';
 
 export default function CardComponent() {
@@ -28,13 +27,11 @@ export default function CardComponent() {
   })
 
   return (
-    <MantineProvider theme={{ colorScheme: "dark" }} withNormalizeCSS withGlobalStyles>
-      <div className="card-wrapper">
-        {items ?
-          items.map((question, index) => <Card key={index} props={{ question }} />)
-          : <Loading />
-        }
-      </div>
-    </MantineProvider>
+    <div className="card-wrapper">
+      {items ?
+        items.map((question, index) => <Card key={index} props={{ question }} />)
+        : <Loading />
+      }
+    </div>
   )
 }
