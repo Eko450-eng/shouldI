@@ -15,7 +15,7 @@ export default function Page({ params }: { params: { question: string } }) {
   const [avatar, setAvatar] = useState<string>(placeholder)
 
   async function refetch() {
-    await pb.collection("questions").getOne(params.question, { $autoCancel: false })
+    await pb.collection("questions").getOne(params.question, { $autoCancel: false, sort: "-created" })
       .then((e: unknown) => {
         const record = e as IQuestion
         setQuestion(record)
