@@ -1,7 +1,7 @@
 'use client'
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { ActionIcon } from "@mantine/core"
+import { ActionIcon, Group } from "@mantine/core"
 import pb from "app/(pb_functions)"
 import { IQuestion } from "interfaces/interfaces"
 import { useRouter } from "next/navigation"
@@ -12,10 +12,13 @@ import InteractionsRow from "./(InteractionsRow)"
 
 interface InterfaceProps {
   question: IQuestion
+  visibleBackground?: boolean
 }
 
 export default function card({ props }: { props: InterfaceProps }) {
   const { question } = props
+  let visibleBackground = props.visibleBackground != undefined ? props.visibleBackground : true
+
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false)
   const router = useRouter()
 
@@ -28,7 +31,7 @@ export default function card({ props }: { props: InterfaceProps }) {
   }, [pb.authStore.model])
 
   return (
-    <div className="question-card">
+    <Group sx={theme => ({ backgroundColor: visibleBackground ? theme.colors.nord_gray[4] : "none" })} className="question-card">
       <div className="question-card-head">
         <h2 className="question-card-title">{question.title}</h2>
         {
@@ -48,6 +51,6 @@ export default function card({ props }: { props: InterfaceProps }) {
       <p className="question-card-desc">{question.desc ? question.desc : ""}</p>
       <Buttons question={question} />
       <InteractionsRow question={question.id} />
-    </div>
+    </Group>
   )
 }

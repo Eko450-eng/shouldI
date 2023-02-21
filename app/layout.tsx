@@ -2,6 +2,7 @@
 import '../styles/globals.scss'
 import Background from './Background'
 import { MantineProvider } from '@mantine/core'
+import ActionBar from './profile/(actionbar)/(actionBar)'
 
 
 export default function RootLayout({
@@ -9,6 +10,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <head />
@@ -26,6 +28,7 @@ export default function RootLayout({
           primaryColor: "nord_gray",
         }} withNormalizeCSS withGlobalStyles>
           {/* <Background /> */}
+          <ActionBar />
           {children}
         </MantineProvider>
       </body>

@@ -1,20 +1,19 @@
 'use client'
 import pb from '../../(pb_functions)'
-import Image from 'next/image'
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { logout } from 'app/(pb_functions)';
 import { useRouter } from 'next/navigation';
-import { Group, Navbar, Center, Stack, Tooltip, UnstyledButton, createStyles, Affix, Paper } from '@mantine/core';
+import { Tooltip, UnstyledButton, createStyles } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faQuestion, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
-import { IDrawer, MenuItem } from 'interfaces/interfaces';
+import { faHome, faPlus, faQuestion, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { MenuItem } from 'interfaces/interfaces';
 import Mobile from './(mobile)';
 import Desktop from './(desktop)';
 
 const useStyles = createStyles((theme) => ({
   link: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     borderRadius: theme.radius.md,
     display: 'flex',
     alignItems: 'center',
@@ -50,13 +49,26 @@ export default function ActionBar() {
     })
   }, [])
 
-  useEffect(() => {
+  function getAvatarImage() {
     if (!pb.authStore.model || !pb.authStore.model.image) return
     setAvatar(`${process.env.NEXT_PUBLIC_DBURL}/api/files/users/${pb.authStore.model.id}/${pb.authStore.model.image}`)
+  }
+
+  useEffect(() => {
+    getAvatarImage()
   }, [])
+
+  pb.authStore.onChange(() => {
+    getAvatarImage()
+  })
 
 
   const options: MenuItem[] = [
+    {
+      title: "Home",
+      icon: faHome,
+      function: () => router.push(`/`)
+    },
     {
       title: "Questions",
       icon: faQuestion,
@@ -79,6 +91,11 @@ export default function ActionBar() {
   ]
 
   const lastOption: MenuItem[] = [
+    {
+      title: "Home",
+      icon: faHome,
+      function: () => router.push(`/`)
+    },
     {
       title: "Signup",
       icon: faRightToBracket,

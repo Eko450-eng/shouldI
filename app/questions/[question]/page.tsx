@@ -1,39 +1,74 @@
+'use client'
+import pb from 'app/(pb_functions)'
+import Image from 'next/image'
 import { IComment, IQuestion } from 'interfaces/interfaces'
+import { Record } from 'pocketbase'
+import { useEffect, useState } from 'react'
 import Card from '../../(cards)/(components)/(card)'
 import AddComment from './(addComment)'
+import { Group, Stack, Text } from '@mantine/core'
 
-async function getComments(question: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DBURL}/api/collections/comments/records/?filter=(thread="${question}")`, { cache: 'no-store' })
-  return res.json()
-}
+export default function Page({ params }: { params: { question: string } }) {
+  const [question, setQuestion] = useState<IQuestion | null>(null)
+  const [comments, setComments] = useState<IComment[] | null>(null)
+  const placeholder = `${process.env.NEXT_PUBLIC_DBURL}/api/files/assets/ocmfvobwbq7xu1u/frame_2_qAqNR4gVxy.png`
+  const [avatar, setAvatar] = useState<string>(placeholder)
 
-async function getCollection(question: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DBURL}/api/collections/questions/records/${question}`, { cache: 'no-store' })
-  const returnValue = await res.json()
-  return returnValue
-}
+  async function refetch() {
+    await pb.collection("questions").getOne(params.question, { $autoCancel: false })
+      .then((e: unknown) => {
+        const record = e as IQuestion
+        setQuestion(record)
+      })
+  }
 
-export default async function Page({ params }: { params: { question: string } }) {
-  const collection = await getCollection(params.question)
-  const question = collection as IQuestion
-  const { items } = await getComments(params.question)
+  async function getQuestions() {
+    await pb.collection("comments").getList(1, 50, { $autoCancel: false, filter: `thread="${params.question}"` })
+      .then((e: unknown) => {
+        const data = e as Record
+        const commentList = data.items as IComment[]
+        setComments(commentList)
+      })
+  }
+
+  useEffect(() => {
+    refetch()
+    getQuestions()
+  }, [])
 
   return (
     <div className="flex-center">
-      <Card props={{ question }} />
+      {question && <Card props={{ question, visibleBackground: false }} />}
+
       <div className="commentbox-wrapper">
         {
-          items.map((comment: IComment, index: number) => {
+          comments &&
+          comments.map((comment: IComment, index: number) => {
+
+            const userImage = pb.collection("users").getOne(comment.userID, { $autoCancel: false }).then((e: any) => {
+              setAvatar(`${process.env.NEXT_PUBLIC_DBURL}/api/files/users/${comment.userID}/${e.image}`)
+            })
+
+            userImage
             return (
-              <div className="commentbox" key={index}>
-                <p>{comment.user}</p>
-                <p>{comment.message}</p>
-              </div>
+              <Group className="commentbox" key={index}>
+                <Image
+                  alt={`Avatar Image of the user`}
+                  className="profile-icon"
+                  src={avatar}
+                  width="40"
+                  height="40"
+                />
+                <Stack spacing="xs">
+                  <Text variant="gradient" size="sm">{comment.user}</Text>
+                  <Text>{comment.message}</Text>
+                </Stack>
+              </Group>
             )
           })
         }
       </div>
-      <AddComment id={question.id} />
+      {question && <AddComment id={question.collectionId} />}
     </div>
   )
 }

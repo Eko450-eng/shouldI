@@ -9,17 +9,20 @@ export default function Mobile({ props }: { props: { avatar: any, links: any } }
   return (
     <Affix
       position={{ bottom: 0, left: 0 }}
+      sx={theme => ({ backgroundColor: theme.colors.nord_gray[4], width: "100%" })}
     >
-      <Paper>
+      <Paper
+        sx={{ background: "none", paddingBottom: "2rem" }}
+      >
         <Group
           position="apart"
-          sx={{ width: "100vw" }}
+          sx={{ width: "90%", marginInline: "auto", paddingTop: "1rem" }}
         >
           <Image
             alt={`Avatar Image of the user`}
             className="profile-icon"
-            width="50"
-            height="50"
+            width="30"
+            height="30"
             src={avatar}
           />
           {links}

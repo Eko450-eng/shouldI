@@ -10,7 +10,8 @@ export default function AddComment({ id }: { id: string }) {
   const [message, setMessage] = useState<IComment>({
     message: "",
     user: "",
-    thread: id
+    thread: id,
+    userID: ""
   })
 
   function setUser() {
@@ -25,15 +26,15 @@ export default function AddComment({ id }: { id: string }) {
 
   async function handleSubmit() {
     if (!pb.authStore.isValid || !pb.authStore.model) return
-    setMessage({ ...message, user: pb.authStore.model.username && pb.authStore.model.username })
+    setMessage({
+      ...message,
+      user: pb.authStore.model.username && pb.authStore.model.username,
+      userID: pb.authStore.model.id
+    })
     await pb.collection("comments").create(message)
     setMessage({ ...message, message: "" })
     router.push(`/questions/${id}`)
   }
-
-  useEffect(() => {
-    console.log(id)
-  }, [])
 
   return (
     <>

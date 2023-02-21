@@ -65,12 +65,13 @@ export default function InteractionsRow({ question }: { question: string }) {
       pb.collection("questions").update(question, { likers: newLikers })
     }
     setLikes(data.likers.length)
-    didLike()
-    router.refresh()
+    setTimeout(() => didLike(), 250)
   }
 
   return (
-    <Group position="apart">
+    <Group
+      sx={{ marginTop: ".5rem" }}
+      position="apart">
       <ActionIcon onClick={() => router.push(`/questions/${data && data.id}`)}>
         <FontAwesomeIcon icon={faComment} />
       </ActionIcon>

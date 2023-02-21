@@ -12,6 +12,7 @@ export interface IVoters {
 }
 
 export interface IComment {
+  userID: string,
   user: string,
   message: string,
   thread: any

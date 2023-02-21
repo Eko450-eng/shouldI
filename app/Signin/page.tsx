@@ -27,7 +27,10 @@ export default function Login() {
   });
 
 
-  const loginHandler = () => login(userName, password).then(() => router.push("/"))
+  const loginHandler = () => login(userName, password).then(() => setTimeout(() => {
+    router.push("/")
+  }, 250))
+
   const signupHandler = async () => {
     const formData = new FormData()
     formData.append("username", userName)

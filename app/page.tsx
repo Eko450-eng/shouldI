@@ -5,8 +5,7 @@ import '../styles/globals.scss'
 export default async function Page() {
 
   return (
-    <main className="main">
-      <ActionBar />
+    <main>
       <CardComponent />
     </main>
   )

@@ -17,7 +17,6 @@ export default function Buttons({ question }: { question: IQuestion }) {
   const [voteValue, setVoteValue] = useState<Number>(0);
   const router = useRouter()
 
-
   async function checkIfAuthenticated() {
     if (!pb.authStore.isValid || !pb.authStore.model?.id) return
     setCurrentState("canVote")
