@@ -15,7 +15,6 @@ export default function CardComponent() {
     await pb.collection("questions").getList(1, 50, { $autoCancel: false, sort: "-created" })
       .then((e: any) => {
         let item = e.items as IQuestion[]
-        console.log(item)
         setItems(item)
       })
   }

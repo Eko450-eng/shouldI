@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { IQuestionSimplified } from '../../../interfaces/interfaces'
-import createNew from './(logic)'
 import { useRouter } from 'next/navigation'
-import { Input, Button } from '@mantine/core'
+import { Input, Button, FileButton } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import pb from '../../(pb_functions)'
 
 export default function Page() {
   const router = useRouter()
@@ -18,6 +19,41 @@ export default function Page() {
     optionNameTwo: "",
     title: "",
   })
+
+  let formData = new FormData()
+  const voters = ['{ "voted": [ "" ], "voters": [ [] ] } ']
+
+  async function createNew() {
+    if (!pb.authStore.isValid)
+      if (!question.optionNameOne || !question.optionNameTwo) return
+    formData.append("owner", pb.authStore.model!.id)
+    formData.append("title", question.title)
+    if (question.desc) formData.append("desc", question.desc ? question.desc : "")
+    formData.append("optionNameOne", question.optionNameOne)
+    formData.append("optionNameTwo", question.optionNameTwo)
+    if (question.image1) formData.append("image1", question.image1)
+    if (question.image2) formData.append("image2", question.image2)
+    formData.append("answerOne", "0")
+    formData.append("answerTwo", "0")
+    formData.append("voters", voters[0])
+
+    pb.collection("questions").create(formData)
+      .then(() => {
+        showNotification({
+          title: "Asking has been done",
+          message: "Let's wait for some answers",
+          color: "green"
+        })
+        router.push("/")
+      }).catch(() => {
+        showNotification({
+          title: "Oops something went wrong",
+          message: "Please check all fields and try again",
+          color: "red"
+        })
+      })
+    formData = new FormData()
+  }
 
 
   return (
@@ -53,9 +89,10 @@ export default function Page() {
               component="label"
             >
 
-              <FontAwesomeIcon icon={faFile} />
               {/* To-Do change any to correct typ */}
-              <input type="file" hidden name="file" onChange={(v: any) => setQuestion({ ...question, image1: v.target.files[0] })} />
+              <FileButton onChange={(v: any) => setQuestion({ ...question, image1: v.target.files[0] })} accept="image/png,image/jpeg">
+                {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
+              </FileButton>
             </Button>
           </div>
 
@@ -68,22 +105,23 @@ export default function Page() {
               placeholder="Answer two" />
 
             <Button
+              className="file-upload-btn"
               component="label"
             >
-              <FontAwesomeIcon icon={faFile} />
-              <input type="file" hidden name="file" onChange={(v: any) => setQuestion({ ...question, image2: v.target.files[0] })} />
+
+              {/* To-Do change any to correct typ */}
+              <FileButton onChange={(v: any) => setQuestion({ ...question, image2: v.target.files[0] })} accept="image/png,image/jpeg">
+                {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
+              </FileButton>
             </Button>
           </div>
         </div>
 
-        <button
+        <Button
           className="btn"
-          onClick={() => {
-            createNew(question)
-            router.push("/")
-          }}>
+          onClick={() => createNew()}>
           Create
-        </button>
+        </Button>
       </div>
     </div>
   )

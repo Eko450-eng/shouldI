@@ -1,23 +1,19 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useState } from 'react'
-import { login } from './(logic)'
-import { Input, Button } from '@mantine/core'
+import { Input, Button, FileButton } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import '../../styles/globals.scss'
 import pb from '../(pb_functions)'
-
-interface ImageType {
-  // To-Do Figure this out
-  image: any
-}
 
 export default function Login() {
   const [userName, setUserName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setpassword] = useState<string>("")
   const [confirmPassword, setConfirmPassword] = useState<string>("")
-  const [image, setImage] = useState<ImageType | null>(null)
+  const [image, setImage] = useState<File | null>(null)
   const [loginView, setLoginView] = useState<string>("login")
+
   const router = useRouter()
 
   pb.collection('questions').subscribe('*', function() {
@@ -26,10 +22,23 @@ export default function Login() {
     }, 250);
   });
 
-
-  const loginHandler = () => login(userName, password).then(() => setTimeout(() => {
-    router.push("/")
-  }, 250))
+  const loginHandler = () => {
+    pb.collection("users").authWithPassword(userName, password)
+      .then(() => {
+        showNotification({
+          title: "Welcome",
+          message: "You have been successfully logged in",
+          color: "green"
+        })
+        setTimeout(() => router.push("/"), 250)
+      }).catch(() => {
+        showNotification({
+          title: "Oops",
+          message: "Something went wrong please try again",
+          color: "red"
+        })
+      })
+  }
 
   const signupHandler = async () => {
     const formData = new FormData()
@@ -37,17 +46,22 @@ export default function Login() {
     formData.append("email", email)
     formData.append("emailVisibility", "true")
     formData.append("password", password)
+    formData.append("passwordConfirm", confirmPassword)
     formData.append("name", userName)
-    formData.append("image", image ? image.image : null)
-    await pb.collection("users").create({
-      "username": userName,
-      "email": email,
-      "emailVisibility": true,
-      "password": password,
-      "passwordConfirm": confirmPassword,
-      "name": userName,
-      "role": 1
-    })
+    formData.append("role", "1")
+    if (image) formData.append("image", image as Blob)
+
+    await pb.collection("users").create(formData)
+      .then(async () => {
+        await pb.collection('users').requestVerification(email);
+        loginHandler()
+      }).catch(() => {
+        showNotification({
+          title: "Oops",
+          message: "Something went wrong please try again",
+          color: "red"
+        })
+      })
   }
 
 
@@ -77,7 +91,7 @@ export default function Login() {
         />
 
 
-        {loginView == "register" ?
+        {loginView == "register" &&
           <>
             <Input
               onChange={(v) => setConfirmPassword(v.target.value)}
@@ -86,17 +100,20 @@ export default function Login() {
               placeholder="Confirm password"
             />
 
-            {/* <Button */}
-            {/*   component="label" */}
-            {/* > */}
-            {/*   Upload first image */}
-            {/*   <input type="file" hidden name="file" onChange={(v: any) => setImage({ image: v.target.files[0] })} /> */}
-            {/* </Button> */}
-            <Button onClick={() => signupHandler()} >Register</Button>
+
+            <FileButton onChange={setImage} accept="image/png,image/jpeg">
+              {(props) => <Button {...props}>Upload profile picture</Button>}
+            </FileButton>
+
+
           </>
-          :
-          <Button onClick={() => loginHandler()} >Login</Button>
         }
+        <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[4] })}
+          onClick={() => loginView === "register" ? signupHandler() : loginHandler()}
+          type="submit"
+        >
+          {loginView === "register" ? "Create account" : "Login"}
+        </Button>
       </form>
 
       <div
@@ -104,7 +121,6 @@ export default function Login() {
       >
         <Button
           value="register"
-          color={loginView === "register" ? "green" : "orange"}
           onClick={() => setLoginView(loginView === "register" ? "login" : "register")}>
           {loginView === "register" ? "Already have an account?" : "New User?"}
         </Button>

@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { IQuestion } from '../../../interfaces/interfaces'
 import Image from 'next/image'
 import { Modal } from '@mantine/core'
-import zIndex from '@mui/material/styles/zIndex'
 
 interface InterfaceProps {
   question: IQuestion

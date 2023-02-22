@@ -5,6 +5,7 @@ import answer from "../(logic)"
 import pb from "../../(pb_functions)"
 import { IQuestion } from "interfaces/interfaces"
 import { Button } from '@mantine/core'
+import { showNotification } from "@mantine/notifications"
 
 interface IBtn {
   name: string
@@ -40,21 +41,26 @@ export default function Buttons({ question }: { question: IQuestion }) {
   function Btn({ props }: { props: IBtn }) {
     const { name, votes, vote } = props
     const displayText: String = `${name} ${voteValue > 0 ? votes : ""}`
-
     const highlight: boolean = vote == voteValue
 
     return (
       <Button
         sx={(theme) => ({
-          background: highlight ? theme.colors.nord_green[4] : theme.colors.nord_pink[3],
-          color: highlight ? theme.primaryColor : theme.white,
+          background: highlight ? theme.colors.nord_green[4] : theme.colors.nord_gray[6],
+          color: highlight ? theme.colors.dark : theme.white,
           border: highlight ? "1px solid white"
             : "none"
         })}
 
-
         onClick={() => {
-          if (!pb.authStore.model || currentState !== "canVote") return
+          if (!pb.authStore.model || currentState !== "canVote") {
+            showNotification({
+              title: "You shall not vote",
+              message: "Pleas login to be able to vote",
+              color: "red"
+            })
+            return
+          }
           answer(pb.authStore.model, question.id, vote).then(
             (res: any) => {
               console.log(res)
@@ -67,7 +73,6 @@ export default function Buttons({ question }: { question: IQuestion }) {
       </Button>
     )
   }
-
 
   return (
     <div className={`flex-center row`}>

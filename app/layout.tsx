@@ -1,8 +1,8 @@
 'use client'
 import '../styles/globals.scss'
-import Background from './Background'
 import { MantineProvider } from '@mantine/core'
-import ActionBar from './profile/(actionbar)/(actionBar)'
+import { NotificationsProvider } from '@mantine/notifications'
+import NavBar from './navbar/(navbar)'
 
 
 export default function RootLayout({
@@ -24,12 +24,14 @@ export default function RootLayout({
             "nord_green": ["#DBE1D7", "#C7D1BE", "#B4C6A5", "#A3BE8C", "#93AC7D", "#849B70", "#778967", "#6B7960", "#616A59", "#575E51"],
             "nord_purple": ["#DBD2D9", "#CBBBC8", "#BEA5B9", "#B48EAD", "#A37F9C", "#93728D", "#82697D", "#72616F", "#655963", "#5A5158"],
             "nord_gray": ["#43474F", "#3C404A", "#353A44", "#2E3440", "#2B2F38", "#282B31", "#25272B", "#222327", "#1F2022", "#1C1D1E"],
+            "nord_success": ["#548F54", "#458945", "#378437", "#2A812A", "#1C7F1C", "#0E7F0E", "#008000", "#0C680C", "#135513", "#174717",]
           },
           primaryColor: "nord_gray",
         }} withNormalizeCSS withGlobalStyles>
-          {/* <Background /> */}
-          <ActionBar />
-          {children}
+          <NotificationsProvider>
+            <NavBar />
+            {children}
+          </NotificationsProvider>
         </MantineProvider>
       </body>
     </html>

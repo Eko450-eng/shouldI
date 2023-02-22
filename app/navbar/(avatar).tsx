@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@mantine/core'
-import pb from "../../(pb_functions)";
+import pb from "../(pb_functions)";
 import Image from 'next/image'
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

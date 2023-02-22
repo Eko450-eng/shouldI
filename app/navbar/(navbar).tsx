@@ -1,5 +1,5 @@
 'use client'
-import pb from '../../(pb_functions)'
+import pb from '../(pb_functions)'
 import { useEffect, useState } from 'react';
 import { logout } from 'app/(pb_functions)';
 import { useRouter } from 'next/navigation';
@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function ActionBar() {
+export default function NavBar() {
   const { classes, cx } = useStyles()
   const [windowWidth, setWindowWidth] = useState<boolean>(false)
 
