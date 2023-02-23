@@ -49,7 +49,7 @@ export default function card({ props }: { props: InterfaceProps }) {
       </div>
       <ImageComponent props={{ question, image1, image2 }} />
       <p className="question-card-desc">{question.desc ? question.desc : ""}</p>
-      <Buttons question={question} />
+      <Buttons card={question} />
       <InteractionsRow question={question.id} />
     </Group>
   )

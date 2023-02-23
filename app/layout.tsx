@@ -3,13 +3,10 @@ import '../styles/globals.scss'
 import { MantineProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
 import NavBar from './navbar/(navbar)'
+import UserContextProvider from 'contexts/(UserContext)'
 
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
@@ -29,8 +26,10 @@ export default function RootLayout({
           primaryColor: "nord_gray",
         }} withNormalizeCSS withGlobalStyles>
           <NotificationsProvider>
-            <NavBar />
-            {children}
+            <UserContextProvider>
+              <NavBar />
+              {children}
+            </UserContextProvider>
           </NotificationsProvider>
         </MantineProvider>
       </body>

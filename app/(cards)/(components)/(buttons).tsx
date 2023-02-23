@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import answer from "../(logic)"
 import pb from "../../(pb_functions)"
-import { IQuestion } from "interfaces/interfaces"
+import { IFirstAnswer, IQuestion, ISecondAnswer, IUser } from "interfaces/interfaces"
 import { Button } from '@mantine/core'
 import { showNotification } from "@mantine/notifications"
 
@@ -13,7 +13,7 @@ interface IBtn {
   vote: 1 | 2
 }
 
-export default function Buttons({ question }: { question: IQuestion }) {
+export default function Buttons({ card }: { card: IQuestion }) {
   const [currentState, setCurrentState] = useState<string>("pending");
   const [voteValue, setVoteValue] = useState<Number>(0);
   const router = useRouter()
@@ -25,7 +25,7 @@ export default function Buttons({ question }: { question: IQuestion }) {
   }
 
   function checkIfVoted() {
-    question.voters.voters.filter((k) => {
+    card.voters.voters.filter((k: { id: string, name: string, vote: number }) => {
       if (k.name == pb.authStore.model!.name) {
         setCurrentState("DIDVOTE")
         setCurrentState(`VOTE${k.vote}`)
@@ -61,13 +61,20 @@ export default function Buttons({ question }: { question: IQuestion }) {
             })
             return
           }
-          answer(pb.authStore.model, question.id, vote).then(
-            (res: any) => {
-              console.log(res)
-              pb.collection("questions").update(question.id, res)
-                .then(() => router.refresh())
-            }
-          )
+          answer(pb.authStore.model as IUser, card.id, vote)
+            .then(
+              (value: IFirstAnswer | ISecondAnswer | undefined) => {
+                if (!value) return
+                pb.collection("questions").update(card.id, value)
+                  .then(() => router.refresh())
+              }
+            ).catch((e) => {
+              showNotification({
+                title: "Opps",
+                message: `${e.message}`,
+                color: "red"
+              })
+            })
         }}>
         {displayText}
       </Button>
@@ -76,8 +83,8 @@ export default function Buttons({ question }: { question: IQuestion }) {
 
   return (
     <div className={`flex-center row`}>
-      <Btn props={{ name: question.optionNameOne, votes: question.answerOne, vote: 1 }} />
-      <Btn props={{ name: question.optionNameTwo, votes: question.answerTwo, vote: 2 }} />
+      <Btn props={{ name: card.optionNameOne, votes: card.answerOne, vote: 1 }} />
+      <Btn props={{ name: card.optionNameTwo, votes: card.answerTwo, vote: 2 }} />
     </div>
   )
 }

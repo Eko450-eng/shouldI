@@ -20,13 +20,12 @@ export default function Page() {
     title: "",
   })
 
-  let formData = new FormData()
   const voters = ['{ "voted": [ "" ], "voters": [ [] ] } ']
 
   async function createNew() {
-    if (!pb.authStore.isValid)
-      if (!question.optionNameOne || !question.optionNameTwo) return
-    formData.append("owner", pb.authStore.model!.id)
+    let formData = new FormData()
+    if (!pb.authStore.isValid) return
+    if (!question.optionNameOne || !question.optionNameTwo) return
     formData.append("title", question.title)
     if (question.desc) formData.append("desc", question.desc ? question.desc : "")
     formData.append("optionNameOne", question.optionNameOne)
@@ -36,6 +35,11 @@ export default function Page() {
     formData.append("answerOne", "0")
     formData.append("answerTwo", "0")
     formData.append("voters", voters[0])
+    formData.append("likers", "")
+    formData.append("owner", pb.authStore.model!.id)
+    formData.append("comments", "")
+
+    console.log(formData)
 
     pb.collection("questions").create(formData)
       .then(() => {
@@ -89,8 +93,7 @@ export default function Page() {
               component="label"
             >
 
-              {/* To-Do change any to correct typ */}
-              <FileButton onChange={(v: any) => setQuestion({ ...question, image1: v.target.files[0] })} accept="image/png,image/jpeg">
+              <FileButton onChange={(v: File) => setQuestion({ ...question, image1: v })} accept="image/png,image/jpeg">
                 {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
               </FileButton>
             </Button>
@@ -109,8 +112,10 @@ export default function Page() {
               component="label"
             >
 
-              {/* To-Do change any to correct typ */}
-              <FileButton onChange={(v: any) => setQuestion({ ...question, image2: v.target.files[0] })} accept="image/png,image/jpeg">
+              <FileButton onChange={(v: File) => {
+                console.log(v)
+                setQuestion({ ...question, image2: v })
+              }} accept="image/png,image/jpeg">
                 {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
               </FileButton>
             </Button>

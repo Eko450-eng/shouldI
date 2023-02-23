@@ -1,16 +1,15 @@
-import { Admin, Record } from "pocketbase"
-import { IQuestion } from '../../interfaces/interfaces'
+import { IFirstAnswer, IQuestion, ISecondAnswer, IUser } from '../../interfaces/interfaces'
 import pb from '../(pb_functions)'
 
-export default async function answer(user: Record | Admin, question: string, answer: number) {
-  if (!user) return
+export default async function answer(user: IUser, question: string, answer: number) {
+  if (!user) throw new Error("Seems like you are not logged in");
   const r: IQuestion = await pb.collection("questions").getOne(question)
   const u = await pb.collection("users").getOne(user.id)
   const currentVoted = r.voters.voted
   const currentVoters = r.voters.voters
   const votedList = [...currentVoted, user.id]
 
-  if (currentVoted.includes(user.id)) return
+  if (currentVoted.includes(user.id)) throw new Error("Seems like you already voted");
 
   if (answer == 1) {
     const newAnswer = r.answerOne + 1
@@ -26,7 +25,7 @@ export default async function answer(user: Record | Admin, question: string, ans
         voted: votedList,
         voters: votersList
       }
-    }
+    } as IFirstAnswer
 
   } else if (answer == 2) {
     const newAnswer = r.answerTwo + 1
@@ -42,7 +41,7 @@ export default async function answer(user: Record | Admin, question: string, ans
         voted: votedList,
         voters: votersList
       }
-    }
+    } as ISecondAnswer
   }
 
 }

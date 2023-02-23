@@ -43,9 +43,10 @@ export default function NavBar() {
 
   useEffect(() => {
     setWindowWidth(window.innerWidth < 980 ? true : false)
-    window.addEventListener("resize", (e: any) => {
-      if (!e.target) return
-      setWindowWidth(e.target.innerWidth < 980 ? true : false)
+    window.addEventListener("resize", (e: UIEvent) => {
+      const win = e.target as Window
+      if (!win) return
+      setWindowWidth(win.innerWidth < 980 ? true : false)
     })
   }, [])
 
@@ -108,7 +109,7 @@ export default function NavBar() {
     return (
       <Tooltip label={props.title} position="right" transitionDuration={0} >
 
-        <UnstyledButton onClick={props.function} className={cx(classes.link, { [classes.active]: true })}>
+        <UnstyledButton id={`link-${props.title.replace(/ /g, '')}`} onClick={props.function} className={cx(classes.link, { [classes.active]: true })}>
           <FontAwesomeIcon color="white" icon={props.icon} />
         </UnstyledButton>
 
@@ -117,20 +118,20 @@ export default function NavBar() {
 
   }
 
-  const links = pb.authStore.isValid ? options.map((option, index) => (
+  const links: JSX.Element[] = pb.authStore.isValid ? options.map((option, index) => (
     <MenuList props={option} key={index} />
   )) : lastOption.map((option, index) => (
     <MenuList props={option} key={index} />
   ))
 
   return (
-    <div>
+    <>
       {
         windowWidth ?
           <Mobile props={{ avatar, links }} />
           :
           <Desktop props={{ avatar, links }} />
       }
-    </div >
+    </>
   )
 }

@@ -45,9 +45,10 @@ export default function Page({ params }: { params: { question: string } }) {
           comments &&
           comments.map((comment: IComment, index: number) => {
 
-            const userImage = pb.collection("users").getOne(comment.userID, { $autoCancel: false }).then((e: any) => {
-              setAvatar(`${process.env.NEXT_PUBLIC_DBURL}/api/files/users/${comment.userID}/${e.image}`)
-            })
+            const userImage = pb.collection("users").getOne(comment.userID, { $autoCancel: false })
+              .then((e: Record) => {
+                setAvatar(`${process.env.NEXT_PUBLIC_DBURL}/api/files/users/${comment.userID}/${e.image}`)
+              })
 
             userImage
             return (

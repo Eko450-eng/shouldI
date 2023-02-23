@@ -3,7 +3,7 @@
 This app was for me to get used to the new next13 appDir and fetching structure
 
 ## Use it
-You can use the webapp [here](https://should-i-seven.vercel.app/)
+You can use the webapp [here](https://shouldi.wipdesign.de/)
 
 ## Usage
 To get started just sign up or login and create a question.
@@ -14,7 +14,7 @@ Or even just what Image looks better it's up to you
 ## Most Recent updates
 - [x] Change Button styles
 - [x] Trigger login after signup
-- [ ] Add testing library
+- [x] Add testing library
 - [ ] Clean up code
 - [ ] Fix performance
 - [ ] Global Context for the user
@@ -26,10 +26,14 @@ Or even just what Image looks better it's up to you
 - [x] Signing in not working
 - [x] Don't forward on errors
 - [x] Enter to submit on loginform
+- [ ] Change image after logout
+- [ ] Indicate too long description
 
 ### Features
 - [ ] Groups and Communities
 - [ ] Pull to Refresh option
+- [ ] Progress bar for votes
+- [ ] Display Amount of comments
 - [x] Add images
 - [x] Notifications on everything
 - [x] Send verification email

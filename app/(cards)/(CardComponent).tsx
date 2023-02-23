@@ -2,6 +2,7 @@
 import pb from 'app/(pb_functions)';
 import Loading from 'app/loading';
 import { useRouter } from 'next/navigation';
+import { ListResult, Record } from 'pocketbase';
 import { useEffect, useState } from 'react';
 import { IQuestion } from '../../interfaces/interfaces';
 import '../../styles/globals.scss'
@@ -13,7 +14,7 @@ export default function CardComponent() {
 
   async function refetch() {
     await pb.collection("questions").getList(1, 50, { $autoCancel: false, sort: "-created" })
-      .then((e: any) => {
+      .then((e: ListResult<Record>) => {
         let item = e.items as IQuestion[]
         setItems(item)
       })
@@ -25,6 +26,7 @@ export default function CardComponent() {
 
   pb.collection("questions").subscribe('*', () => {
     refetch()
+    pb.collection("questions").unsubscribe()
   })
 
   pb.authStore.onChange(() => router.refresh())

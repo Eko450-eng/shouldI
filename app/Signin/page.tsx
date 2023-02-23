@@ -30,7 +30,7 @@ export default function Login() {
           message: "You have been successfully logged in",
           color: "green"
         })
-        setTimeout(() => router.push("/"), 250)
+        router.push("/")
       }).catch(() => {
         showNotification({
           title: "Oops",
@@ -72,6 +72,7 @@ export default function Login() {
         {loginView == "register" &&
 
           <Input
+            name="email"
             className="white"
             onChange={(v) => setEmail(v.target.value)}
             value={email}
@@ -79,11 +80,13 @@ export default function Login() {
           />
         }
         <Input
+          name="username"
           onChange={(v) => setUserName(v.target.value)}
           value={userName}
           placeholder="Username"
         />
         <Input
+          name="pass"
           onChange={(v) => setpassword(v.target.value)}
           value={password}
           type="password"
@@ -94,6 +97,7 @@ export default function Login() {
         {loginView == "register" &&
           <>
             <Input
+              name="passConfirm"
               onChange={(v) => setConfirmPassword(v.target.value)}
               value={confirmPassword}
               type="password"
@@ -120,7 +124,7 @@ export default function Login() {
         className="flex-center row"
       >
         <Button
-          value="register"
+          value={loginView === "register" ? "login" : "register"}
           onClick={() => setLoginView(loginView === "register" ? "login" : "register")}>
           {loginView === "register" ? "Already have an account?" : "New User?"}
         </Button>
