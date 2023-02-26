@@ -44,12 +44,13 @@ export default function Login() {
     formData.append("name", userName)
     formData.append("role", "1")
     if (image) formData.append("image", image as Blob)
+    if (!image) formData.append("image", "")
 
     await pb.collection("users").create(formData)
       .then(async () => {
-        await pb.collection('users').requestVerification(email);
+        await pb.collection("users").requestVerification(email)
         loginHandler()
-      }).catch(() => {
+      }).catch((e: Error) => {
         showNotification({
           title: "Oops",
           message: "Something went wrong please try again",
@@ -106,12 +107,23 @@ export default function Login() {
 
           </>
         }
-        <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[4] })}
-          onClick={() => loginView === "register" ? signupHandler() : loginHandler()}
-          type="submit"
-        >
-          {loginView === "register" ? "Create account" : "Login"}
-        </Button>
+        {
+          loginView === "register" ?
+            <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[4] })}
+              onClick={() => signupHandler()}
+              type="submit"
+            >
+              Create new User
+            </Button> :
+
+            <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[4] })}
+              onClick={() => loginHandler()}
+              type="submit"
+            >
+              Login
+            </Button>
+
+        }
       </form>
 
       <div
