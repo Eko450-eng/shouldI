@@ -1,7 +1,7 @@
 'use client'
 import { Group } from "@mantine/core"
 import { IQuestion } from "interfaces/interfaces"
-import Buttons from "./(buttons)"
+import Buttons from "./(votecomponents)/(buttons)"
 import ImageComponent from "./(imageComponent)"
 import InteractionsRow from "./(InteractionsRow)"
 import DeleteButton from "./socialButtons/(deleteButton)"

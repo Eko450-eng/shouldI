@@ -21,7 +21,10 @@ export default function LikeButton({ props }: { props: IQuestion }) {
     setAmount(props.likers.length)
   }
 
-  useEffect(() => { getAmount() }, [props])
+  useEffect(() => {
+    checkIfUserHasLiked()
+    getAmount()
+  }, [props])
 
   useEffect(() => {
     checkIfUserHasLiked()

@@ -22,6 +22,9 @@ pb_migrations/*
 .DS_Store
 *.pem
 
+# Obsidian note taking
+.obsidian
+
 # debug
 npm-debug.log*
 yarn-debug.log*

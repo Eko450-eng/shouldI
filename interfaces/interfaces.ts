@@ -95,3 +95,12 @@ export interface ISecondAnswer {
   voters: IVoters;
 }
 
+export interface IVoteButton {
+  name: string
+  votes: number
+  vote: 1 | 2
+  voteValue: number
+  card: IQuestion
+  currentState: string
+}
+
