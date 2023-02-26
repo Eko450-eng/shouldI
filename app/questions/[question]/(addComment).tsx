@@ -4,8 +4,8 @@ import { Input, Button, Group } from '@mantine/core'
 import { IComment, IQuestion } from "interfaces/interfaces"
 import { useState } from "react"
 
-export default function AddComment({ props }: { props: { refetch: any, question: IQuestion } }) {
-  const { refetch, question } = props
+export default function AddComment({ props }: { props: { question: IQuestion, refetch: () => void } }) {
+  const { question, refetch } = props
   const initialData = {
     message: "",
     user: "",
@@ -16,9 +16,7 @@ export default function AddComment({ props }: { props: { refetch: any, question:
   const [message, setMessage] = useState<IComment>(initialData)
 
   async function handleSubmit() {
-    console.log(message)
     if (!pb.authStore.isValid || !pb.authStore.model) return
-
     await pb.collection("comments").create({
       "user": pb.authStore.model.username,
       "userID": pb.authStore.model.id,
@@ -26,6 +24,7 @@ export default function AddComment({ props }: { props: { refetch: any, question:
       "thread": question.id
     })
     setMessage(initialData)
+    refetch()
   }
 
   return (
@@ -34,7 +33,6 @@ export default function AddComment({ props }: { props: { refetch: any, question:
         <Group sx={{
           position: "fixed",
           bottom: "7rem",
-
         }}>
           <form className="flex-center row" onSubmit={(e) => e.preventDefault()}>
             <Input
@@ -48,7 +46,6 @@ export default function AddComment({ props }: { props: { refetch: any, question:
             <Button
               type="submit"
               onClick={handleSubmit}
-
             >Send</Button>
           </form>
         </Group>

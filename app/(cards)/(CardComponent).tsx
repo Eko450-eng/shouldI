@@ -24,6 +24,7 @@ export default function CardComponent() {
 
   pb.collection("questions").subscribe('*', () => {
     refetch()
+    pb.collection("questions").unsubscribe()
   })
 
   pb.authStore.onChange(() => router.refresh())
