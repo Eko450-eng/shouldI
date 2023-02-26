@@ -16,12 +16,6 @@ export default function Login() {
 
   const router = useRouter()
 
-  pb.collection('questions').subscribe('*', function() {
-    setTimeout(() => {
-      router.refresh()
-    }, 250);
-  });
-
   const loginHandler = () => {
     pb.collection("users").authWithPassword(userName, password)
       .then(() => {

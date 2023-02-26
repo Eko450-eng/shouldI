@@ -59,10 +59,7 @@ export default function NavBar() {
     getAvatarImage()
   }, [])
 
-  pb.authStore.onChange(() => {
-    getAvatarImage()
-  })
-
+  pb.authStore.onChange(() => getAvatarImage())
 
   const options: MenuItem[] = [
     {
@@ -115,7 +112,6 @@ export default function NavBar() {
 
       </Tooltip>
     )
-
   }
 
   const links: JSX.Element[] = pb.authStore.isValid ? options.map((option, index) => (

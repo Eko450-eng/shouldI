@@ -39,7 +39,6 @@ export default function Page() {
     formData.append("owner", pb.authStore.model!.id)
     formData.append("comments", "")
 
-    console.log(formData)
 
     pb.collection("questions").create(formData)
       .then(() => {
@@ -113,7 +112,6 @@ export default function Page() {
             >
 
               <FileButton onChange={(v: File) => {
-                console.log(v)
                 setQuestion({ ...question, image2: v })
               }} accept="image/png,image/jpeg">
                 {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}

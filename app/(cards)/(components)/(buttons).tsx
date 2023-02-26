@@ -66,7 +66,6 @@ export default function Buttons({ card }: { card: IQuestion }) {
               (value: IFirstAnswer | ISecondAnswer | undefined) => {
                 if (!value) return
                 pb.collection("questions").update(card.id, value)
-                  .then(() => router.refresh())
               }
             ).catch((e) => {
               showNotification({
