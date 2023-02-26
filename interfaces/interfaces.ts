@@ -31,9 +31,13 @@ export interface IQuestionSimplified extends Object {
   image2?: string | File | null
   optionNameOne: string
   optionNameTwo: string
+  color1: string,
+  color2: string
 }
 
 export interface IQuestion extends Record {
+  color1: string,
+  color2: string
   owner?: string
   collectionId: string
   collectionName: string

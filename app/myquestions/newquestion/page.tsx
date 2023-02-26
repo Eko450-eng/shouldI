@@ -5,7 +5,7 @@ import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { IQuestionSimplified } from '../../../interfaces/interfaces'
 import { useRouter } from 'next/navigation'
-import { Input, Button, FileButton } from '@mantine/core'
+import { Input, Button, Stack, FileButton, ColorInput } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import pb from '../../(pb_functions)'
 
@@ -17,6 +17,8 @@ export default function Page() {
     image2: null,
     optionNameOne: "",
     optionNameTwo: "",
+    color1: "",
+    color2: "",
     title: "",
   })
 
@@ -38,6 +40,8 @@ export default function Page() {
     formData.append("likers", "")
     formData.append("owner", pb.authStore.model!.id)
     formData.append("comments", "")
+    formData.append("color1", question.color1 ? question.color1 : "green")
+    formData.append("color2", question.color2 ? question.color1 : "red")
 
 
     pb.collection("questions").create(formData)
@@ -64,60 +68,90 @@ export default function Page() {
       <div className="flex-center">
         <p>Ask a question</p>
         <div className="flex-center desktop-row">
-
           <Input
+            required
             onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, title: v.target.value })}
             value={question.title}
-            placeholder="Title" />
+            placeholder="Title"
+          />
 
-          <Input
-            sx={{ input: { color: "white" }, label: { color: "white" } }}
-            onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, desc: v.target.value })}
-            value={question.desc}
-            placeholder="Description" />
+          <Input.Wrapper
+            error={(question?.desc?.length) && (question?.desc?.length > 40) ? "Too long" : ""}
+          >
+            <Input
+              sx={{ input: { color: "white" }, label: { color: "white" } }}
+              onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, desc: v.target.value })}
+              value={question.desc}
+              placeholder="Description" />
+          </Input.Wrapper>
 
         </div>
 
         <div className="flex-center desktop-row">
-          <div className="row">
-            <Input
-              sx={{ input: { color: "white" }, label: { color: "white" } }}
-              className="file-upload-btn"
-              onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameOne: v.target.value })}
-              value={question.optionNameOne}
-              placeholder="Answer one" />
+          <Stack>
 
-            <Button
-              className="file-upload-btn"
-              component="label"
-            >
+            <div className="row">
+              <Input
+                required
+                sx={{ input: { color: "white" }, label: { color: "white" } }}
+                className="file-upload-btn"
+                onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameOne: v.target.value })}
+                value={question.optionNameOne}
+                placeholder="Answer one" />
 
-              <FileButton onChange={(v: File) => setQuestion({ ...question, image1: v })} accept="image/png,image/jpeg">
-                {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
-              </FileButton>
-            </Button>
-          </div>
 
-          <div className="row">
+              <Button
+                className="file-upload-btn"
+                component="label"
+              >
 
-            <Input
-              sx={{ input: { color: "white" }, label: { color: "white" } }}
-              onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameTwo: v.target.value })}
-              value={question.optionNameTwo}
-              placeholder="Answer two" />
+                <FileButton onChange={(v: File) => setQuestion({ ...question, image1: v })} accept="image/png,image/jpeg">
+                  {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
+                </FileButton>
+              </Button>
 
-            <Button
-              className="file-upload-btn"
-              component="label"
-            >
+            </div>
+            <ColorInput
+              onChange={(v) => {
+                setQuestion({
+                  ...question,
+                  color1: v
+                })
+              }}
+              placeholder="Pick a color"
+            />
+          </Stack>
 
-              <FileButton onChange={(v: File) => {
-                setQuestion({ ...question, image2: v })
-              }} accept="image/png,image/jpeg">
-                {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
-              </FileButton>
-            </Button>
-          </div>
+          <Stack>
+            <div className="row">
+              <Input
+                sx={{ input: { color: "white" }, label: { color: "white" } }}
+                onChange={(v: React.ChangeEvent<HTMLInputElement>) => setQuestion({ ...question, optionNameTwo: v.target.value })}
+                value={question.optionNameTwo}
+                placeholder="Answer two" />
+
+              <Button
+                className="file-upload-btn"
+                component="label"
+              >
+
+                <FileButton onChange={(v: File) => {
+                  setQuestion({ ...question, image2: v })
+                }} accept="image/png,image/jpeg">
+                  {(props) => <Button {...props}><FontAwesomeIcon icon={faFile} /></Button>}
+                </FileButton>
+              </Button>
+            </div>
+            <ColorInput
+              onChange={(v) => {
+                setQuestion({
+                  ...question,
+                  color2: v
+                })
+              }}
+              placeholder="Pick a color"
+            />
+          </Stack>
         </div>
 
         <Button
@@ -126,6 +160,6 @@ export default function Page() {
           Create
         </Button>
       </div>
-    </div>
+    </div >
   )
 } 

@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "ea493652633e4ddc",
@@ -146,18 +147,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "370ee15312774219",
+  "active": "e2ae8b93c962d687",
   "lastOpenFiles": [
+    "app/questions/[question]/(commentbox).tsx",
+    "app/(cards)/(components)/socialButtons/(like).tsx",
+    "app/(cards)/(components)/socialButtons/(deleteButton).tsx",
+    "app/(cards)/(components)/socialButtons/(comment).tsx",
+    "app/(cards)/(components)/socialButtons",
     "app/(cards)/(components)/(votecomponents)/(buttons).tsx",
-    "app/(cards)/(components)/socialButtons/(buttons).tsx",
     "app/(cards)/(components)/(votecomponents)/(VoteButton).tsx",
-    "app/(cards)/(components)/socialButtons/(VoteButton).tsx",
     "app/(cards)/(components)/(votecomponents)",
-    "pnpm-lock.yaml.3986077470",
-    "_tmp_25430_774735fbc38fea6fa527e474527a4c52",
-    "package.json.3810969571",
-    "pnpm-lock.yaml.1919554131",
-    "_tmp_265429_053e8e3b2051d56735567c81abff216a",
-    "app/(cards)/(components)/socialButtons/(deleteButton).tsx"
+    "ssl-proxy-linux-amd64",
+    "app/(states)/UserAuthState.ts",
+    "app/(states)"
   ]
 }

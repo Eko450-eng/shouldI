@@ -18,7 +18,7 @@ export default async function answer(user: IUser, question: string, answer: numb
       id: u.id,
       vote: 1,
     }
-    const votersList = [currentVoters, me]
+    const votersList = [...currentVoters, me]
 
     return {
       answerOne: newAnswer, voters: {
