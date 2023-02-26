@@ -11,10 +11,12 @@ import { Group, Stack, Text } from '@mantine/core'
 export default function Page({ params }: { params: { question: string } }) {
   const [question, setQuestion] = useState<IQuestion | null>(null)
   const [comments, setComments] = useState<IComment[] | null>(null)
+  const [visibleAmount, setVisibleAmount] = useState<number>(5)
   const placeholder = `${process.env.NEXT_PUBLIC_DBURL}/api/files/assets/ocmfvobwbq7xu1u/frame_2_qAqNR4gVxy.png`
   const [avatar, setAvatar] = useState<string>(placeholder)
 
   async function refetch() {
+    console.log("Hey")
     await pb.collection("questions").getOne(params.question, { $autoCancel: false, sort: "-created" })
       .then((e: unknown) => {
         const record = e as IQuestion
@@ -22,8 +24,9 @@ export default function Page({ params }: { params: { question: string } }) {
       })
   }
 
-  async function getQuestions() {
-    await pb.collection("comments").getList(1, 50, { $autoCancel: false, filter: `thread="${params.question}"` })
+  async function getComments() {
+    console.log("test")
+    await pb.collection("comments").getList(1, visibleAmount, { $autoCancel: false, sort: `-created`, filter: `thread="${params.question}"` })
       .then((e: unknown) => {
         const data = e as Record
         const commentList = data.items as IComment[]
@@ -33,14 +36,15 @@ export default function Page({ params }: { params: { question: string } }) {
 
   useEffect(() => {
     refetch()
-    getQuestions()
+    // getComments()
   }, [])
+
 
   return (
     <div className="flex-center">
-      {question && <Card props={{ question, visibleBackground: false }} />}
+      {question && <Card props={{ question, visibleBackground: false, buttons: false }} />}
 
-      <div className="commentbox-wrapper">
+      <div style={{ marginBottom: "14rem" }} className="commentbox-wrapper">
         {
           comments &&
           comments.map((comment: IComment, index: number) => {
@@ -64,12 +68,13 @@ export default function Page({ params }: { params: { question: string } }) {
                   <Text variant="gradient" size="sm">{comment.user}</Text>
                   <Text>{comment.message}</Text>
                 </Stack>
+                <Text onClick={() => setVisibleAmount(visibleAmount + 5)}>Show more</Text>
               </Group>
             )
           })
         }
       </div>
-      {question && <AddComment id={question.collectionId} />}
+      {/* {question && <AddComment props={{ refetch: getComments, question: question }} />} */}
     </div>
   )
 }

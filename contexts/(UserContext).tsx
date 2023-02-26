@@ -2,7 +2,7 @@
 
 import pb from "app/(pb_functions)";
 import { IUser } from "interfaces/interfaces";
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 interface IUserContext {
   user: IUser | null | undefined;
@@ -16,9 +16,13 @@ export const UserContext = createContext<IUserContext>({
   setUser: () => { }
 })
 
-
-export default function UserContextProvider({ children }: { children: React.ReactNode }) {
+export default function UserContextProvider({ children }: { children: any }) {
   const [currentUser, setCurrentUser] = useState<IUser | null>();
+
+  useEffect(() => {
+    if (!pb.authStore.model) setCurrentUser(null)
+    setCurrentUser(pb.authStore.model as IUser)
+  })
 
   pb.authStore.onChange(() => {
     if (!pb.authStore.model) setCurrentUser(null)
@@ -26,15 +30,12 @@ export default function UserContextProvider({ children }: { children: React.Reac
   })
 
   return (
-    <UserContext.Provider
-      value={{
-        user: currentUser,
-        validated: false,
-        setUser: setCurrentUser
-      }}
-    >
+    <UserContext.Provider value={{
+      user: currentUser,
+      validated: false,
+      setUser: setCurrentUser
+    }}>
       {children}
     </UserContext.Provider>
   )
-
 }

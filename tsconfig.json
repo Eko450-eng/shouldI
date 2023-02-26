@@ -10,7 +10,8 @@
     ],
     "types": [
       "cypress",
-      "node"
+      "node",
+      "react/next"
     ],
     "allowJs": true,
     "skipLibCheck": true,
