@@ -8,14 +8,14 @@ export default function User({ params }: { params: { user: IUser } }) {
 
   async function handleSubscription() {
     await navigator.serviceWorker.register('./serviceWorker.js')
-      .then(reg => {
-        reg?.pushManager.subscribe({
+      .then(async (reg) => {
+        const end = await reg?.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: 'BLo1RSUB_siVS-KU6gDsVN72MibaUn8rPfPVay0tHJws6JbV_ljMAR3CEcjZqPH1uKF4MKpOYIsjYkmkPM8ypGY',
-
         }).then(sub => {
-          console.log(sub.toJSON())
+          console.log(end)
         })
+        console.log(end)
       })
   }
 
