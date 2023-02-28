@@ -13,9 +13,11 @@ export default function User({ params }: { params: { user: IUser } }) {
           userVisibleOnly: true,
           applicationServerKey: 'BLo1RSUB_siVS-KU6gDsVN72MibaUn8rPfPVay0tHJws6JbV_ljMAR3CEcjZqPH1uKF4MKpOYIsjYkmkPM8ypGY',
         }).then(sub => {
+          console.log(sub)
           console.log(sub.endpoint)
+          console.log(sub.endpoint.toString())
         })
-        console.log(end)
+        console.log(JSON.stringify(end))
       })
   }
 
@@ -29,7 +31,6 @@ export default function User({ params }: { params: { user: IUser } }) {
       <Button onClick={() => {
         {
           handleSubscription()
-          setSubscribe(true)
         }
       }}>Still in development</Button>
     </>
