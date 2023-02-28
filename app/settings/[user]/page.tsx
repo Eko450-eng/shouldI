@@ -2,6 +2,7 @@
 import { Button, Text } from "@mantine/core";
 import pb from "app/(pb_functions)";
 import { IUser } from "interfaces/interfaces";
+import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 
 export default function User({ params }: { params: { user: IUser } }) {
@@ -22,8 +23,10 @@ export default function User({ params }: { params: { user: IUser } }) {
             "p256dh": sub.getKey("auth"),
             "data": sub.getKey("p256dh")
           })
+          console.log(JSON.stringify(end))
+          console.log(sub.toJSON().keys?.auth)
+          console.log(sub.toJSON().keys?.p256dh)
         })
-        console.log(JSON.stringify(end))
       })
   }
 
