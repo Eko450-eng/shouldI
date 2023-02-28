@@ -1,11 +1,14 @@
 'use client'
 
 import { Affix, Group, Paper } from "@mantine/core"
+import pb from "app/(pb_functions)"
 import Image from 'next/image'
+import { useRouter } from "next/navigation"
 
 
 export default function Mobile({ props }: { props: { avatar: string, links: JSX.Element[] } }) {
   const { avatar, links } = props
+  const router = useRouter()
   return (
     <Affix
       position={{ bottom: 0, left: 0 }}
@@ -20,6 +23,10 @@ export default function Mobile({ props }: { props: { avatar: string, links: JSX.
             sx={{ width: "90%", marginInline: "auto", paddingTop: "1rem" }}
           >
             <Image
+              onClick={() => {
+                if (!pb.authStore.model) return
+                router.push(`/settings/${pb.authStore.model.id}`)
+              }}
               alt={`Avatar Image of the user`}
               className="profile-icon"
               width="30"

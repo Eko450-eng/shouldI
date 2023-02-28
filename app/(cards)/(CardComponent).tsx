@@ -1,42 +1,31 @@
 'use client'
 import pb from 'app/(pb_functions)';
-import Loading from 'app/loading';
 import { useRouter } from 'next/navigation';
-import { ListResult, Record } from 'pocketbase';
 import { useEffect, useState } from 'react';
 import { IQuestion } from '../../interfaces/interfaces';
 import '../../styles/globals.scss'
 import Card from './(components)/(card)';
+global.EventSource = require("eventsource");
 
 export default function CardComponent() {
-  const [items, setItems] = useState<IQuestion[] | null>(null)
   const router = useRouter()
-
-  async function refetch() {
-    await pb.collection("questions").getList(1, 50, { $autoCancel: false, sort: "-created" })
-      .then((e: ListResult<Record>) => {
-        let item = e.items as IQuestion[]
-        setItems(item)
-      })
+  const [data, setData] = useState<IQuestion[] | null>(null)
+  pb.autoCancellation(false)
+  async function fetchData() {
+    const data = await pb.collection("questions").getFullList()
+    setData(data as IQuestion[])
   }
-
-  useEffect(() => { refetch() }, [])
-
-  pb.collection("questions").subscribe('*', () => {
-    refetch()
-    pb.collection("questions").unsubscribe()
-  })
-
+  useEffect(() => { fetchData() }, [])
   pb.authStore.onChange(() => router.refresh())
+
+  pb.collection("questions").subscribe('*', () => fetchData())
 
   return (
     <div className="card-wrapper">
-      {items ?
-        items.map((question, index) =>
+      {data &&
+        data.map((question, index) =>
           <Card key={index} props={{ question }} />
         )
-        :
-        <Loading />
       }
     </div>
   )
