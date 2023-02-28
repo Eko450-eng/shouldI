@@ -7,7 +7,7 @@ export default function User({ params }: { params: { user: IUser } }) {
   const [subscribe, setSubscribe] = useState(false)
 
   async function handleSubscription() {
-    await navigator.serviceWorker.register('./serviceWorker.js')
+    await navigator.serviceWorker.register('/serviceWorker.js')
       .then(async (reg) => {
         const end = await reg?.pushManager.subscribe({
           userVisibleOnly: true,
