@@ -1,10 +1,13 @@
 'use client'
 import { Affix, Group, Paper } from "@mantine/core"
+import pb from "app/(pb_functions)"
 import Image from 'next/image'
+import { useRouter } from "next/navigation"
 
 
 export default function Desktop({ props }: { props: { avatar: string, links: JSX.Element[] } }) {
   const { avatar, links } = props
+  const router = useRouter()
   return (
     <Affix
       sx={theme => ({ backgroundColor: theme.colors.nord_gray[4], height: "100%" })}
@@ -18,6 +21,10 @@ export default function Desktop({ props }: { props: { avatar: string, links: JSX
             sx={{ justifyContent: "center", width: "min-content" }}
           >
             <Image
+              onClick={() => {
+                if (!pb.authStore.model) return
+                router.push(`/settings/${pb.authStore.model.id}`)
+              }}
               alt={`Avatar Image of the user`}
               className="profile-icon"
               width="50"

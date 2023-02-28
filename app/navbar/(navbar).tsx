@@ -120,6 +120,7 @@ export default function NavBar() {
     <MenuList props={option} key={index} />
   ))
 
+
   return (
     <>
       {
