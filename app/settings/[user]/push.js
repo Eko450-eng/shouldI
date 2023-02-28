@@ -10,3 +10,4 @@ push.setVapidDetails('mailto:ekrem@wipdesign.de', key.publicKey, key.privateKey)
 const sub = { user: '386t02u3fas5sfi' }
 
 push.sendNotification(sub, "test")
+
