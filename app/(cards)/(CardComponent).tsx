@@ -12,7 +12,7 @@ export default function CardComponent() {
   const [data, setData] = useState<IQuestion[] | null>(null)
   pb.autoCancellation(false)
   async function fetchData() {
-    const data = await pb.collection("questions").getFullList()
+    const data = await pb.collection("questions").getFullList(1, { sort: "-created" })
     setData(data as IQuestion[])
   }
   useEffect(() => { fetchData() }, [])

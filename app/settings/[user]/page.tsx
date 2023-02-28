@@ -3,8 +3,14 @@ import { Button, Text } from "@mantine/core";
 import { IUser } from "interfaces/interfaces";
 
 export default function User({ params }: { params: { user: IUser } }) {
-  console.log(params)
 
+  navigator.serviceWorker.getRegistration().then(reg => {
+    reg?.pushManager.subscribe({
+      userVisibleOnly: true
+    }).then(sub => {
+      console.log(sub.toJSON())
+    })
+  })
 
   return (
     <>
