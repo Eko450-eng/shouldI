@@ -28,7 +28,7 @@ export default function User({ params }: { params: { user: IUser } }) {
         };
         serviceWorkerRegistration.pushManager.subscribe(options).then(
           (pushSubscription) => {
-            console.log(pushSubscription.endpoint);
+            console.log(pushSubscription);
           }, (error) => {
             console.error(error);
           }
