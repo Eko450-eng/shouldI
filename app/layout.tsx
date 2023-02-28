@@ -28,8 +28,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </NotificationsProvider>
         </MantineProvider>
       </body>
-      <script> window._peq = window._peq || []; window._peq.push(["init"]); </script>
-      <script src="https://clientcdn.pushengage.com/core/401b1f3e-5794-4164-86f8-48a0eec86e18.js" async></script>
     </html>
   )
 }
