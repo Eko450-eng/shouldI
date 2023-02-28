@@ -7,33 +7,18 @@ export default function User({ params }: { params: { user: IUser } }) {
   const [subscribe, setSubscribe] = useState(false)
 
   async function handleSubscription() {
-    //   await navigator.serviceWorker.register('/serviceWorker.js')
-    //     .then(async (reg) => {
-    //       const end = await reg?.pushManager.subscribe({
-    //         userVisibleOnly: true,
-    //         applicationServerKey: 'BLo1RSUB_siVS-KU6gDsVN72MibaUn8rPfPVay0tHJws6JbV_ljMAR3CEcjZqPH1uKF4MKpOYIsjYkmkPM8ypGY',
-    //       }).then(sub => {
-    //         console.log(sub)
-    //         console.log(sub.endpoint)
-    //         console.log(sub.endpoint.toString())
-    //       })
-    //       console.log(JSON.stringify(end))
-    //     })
-
-    navigator.serviceWorker.ready.then(
-      (serviceWorkerRegistration) => {
-        const options = {
+    await navigator.serviceWorker.register('/serviceWorker.js')
+      .then(async (reg) => {
+        const end = await reg?.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: 'BLo1RSUB_siVS-KU6gDsVN72MibaUn8rPfPVay0tHJws6JbV_ljMAR3CEcjZqPH1uKF4MKpOYIsjYkmkPM8ypGY',
-        };
-        serviceWorkerRegistration.pushManager.subscribe(options).then(
-          (pushSubscription) => {
-            console.log(pushSubscription);
-          }, (error) => {
-            console.error(error);
-          }
-        );
-      });
+        }).then(sub => {
+          console.log(sub)
+          console.log(sub.endpoint)
+          console.log(sub.endpoint.toString())
+        })
+        console.log(JSON.stringify(end))
+      })
   }
 
   useEffect(() => {
