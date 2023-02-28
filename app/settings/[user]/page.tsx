@@ -11,21 +11,12 @@ export default function User({ params }: { params: { user: IUser } }) {
   async function handleSubscription() {
     await navigator.serviceWorker.register('/serviceWorker.js')
       .then(async (reg) => {
-        const end = await reg?.pushManager.subscribe({
+        reg.pushManager.getSubscription().then((sub) => {
+          console.log(sub?.toJSON())
+        })
+        await reg?.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: 'BLo1RSUB_siVS-KU6gDsVN72MibaUn8rPfPVay0tHJws6JbV_ljMAR3CEcjZqPH1uKF4MKpOYIsjYkmkPM8ypGY',
-        }).then(sub => {
-          console.log(sub)
-          console.log(sub.getKey("auth"))
-          console.log(sub.getKey("p256dh"))
-          pb.collection("pushKeys").create({
-            "auth": sub,
-            "p256dh": sub.getKey("auth"),
-            "data": sub.getKey("p256dh")
-          })
-          console.log(JSON.stringify(end))
-          console.log(sub.toJSON().keys?.auth)
-          console.log(sub.toJSON().keys?.p256dh)
         })
       })
   }
