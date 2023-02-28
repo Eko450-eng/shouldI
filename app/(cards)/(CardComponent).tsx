@@ -1,12 +1,11 @@
 'use client'
 import pb from 'app/(pb_functions)';
-import Loading from 'app/loading';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { IQuestion } from '../../interfaces/interfaces';
 import '../../styles/globals.scss'
 import Card from './(components)/(card)';
-import eventsource from 'eventsource'
+global.EventSource = require("eventsource");
 
 export default function CardComponent() {
   const router = useRouter()
@@ -23,12 +22,10 @@ export default function CardComponent() {
 
   return (
     <div className="card-wrapper">
-      {data ?
+      {data &&
         data.map((question, index) =>
           <Card key={index} props={{ question }} />
         )
-        :
-        <Loading />
       }
     </div>
   )
