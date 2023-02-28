@@ -7,7 +7,14 @@ const key = {
 
 push.setVapidDetails('mailto:ekrem@wipdesign.de', key.publicKey, key.privateKey)
 
-const sub = { endpoint: 'https://fcm.googleapis.com/fcm/send/fJdB9avTLRA:AP…piuiEz1DxCrG7Uqnr3V1Q4HAPOK1bkaL6F8u6Eh-TNfEQZD3A', expirationTime: null }
+const sub = {
+  endpoint: "https://fcm.googleapis.com/fcm/send/eMXUuYY9PgE:APA91bEZrMNocx4gx9SDUDyA5qbbtLYnzlcJulNRGdAs-1bll3qwx9JnebM2eJcXBOPcMxiRYFoo8vpm0oDVItWJDoC6pqpRgMr_cHQHdKps9nG2Vkcos-yGhNaLETeueYFM6bqQ8_s1",
+  expirationTime: null,
+  keys: {
+    auth: "7WtKClgtjXY4Z5PxlSRgeQ",
+    p256dh: "BISsHWKuKFf2Ux22Uu_plFWLyxwk5bs1GgamQC5dW6h40GNq2XP9jDRPEy4u3KKTXvgve2PQjRX8ANPLOmk7ktw"
+  }
+}
 
 push.sendNotification(sub, "test")
 
