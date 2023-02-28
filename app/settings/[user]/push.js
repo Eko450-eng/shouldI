@@ -7,7 +7,7 @@ const key = {
 
 push.setVapidDetails('mailto:ekrem@wipdesign.de', key.publicKey, key.privateKey)
 
-const sub = {}
+const sub = { endpoint: 'https://fcm.googleapis.com/fcm/send/fJdB9avTLRA:AP…piuiEz1DxCrG7Uqnr3V1Q4HAPOK1bkaL6F8u6Eh-TNfEQZD3A', expirationTime: null }
 
 push.sendNotification(sub, "test")
 

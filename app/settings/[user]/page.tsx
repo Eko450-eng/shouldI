@@ -1,5 +1,6 @@
 'use client'
 import { Button, Text } from "@mantine/core";
+import pb from "app/(pb_functions)";
 import { IUser } from "interfaces/interfaces";
 import { useEffect, useState } from "react";
 
@@ -14,8 +15,13 @@ export default function User({ params }: { params: { user: IUser } }) {
           applicationServerKey: 'BLo1RSUB_siVS-KU6gDsVN72MibaUn8rPfPVay0tHJws6JbV_ljMAR3CEcjZqPH1uKF4MKpOYIsjYkmkPM8ypGY',
         }).then(sub => {
           console.log(sub)
-          console.log(sub.endpoint)
-          console.log(sub.endpoint.toString())
+          console.log(sub.getKey("auth"))
+          console.log(sub.getKey("p256dh"))
+          pb.collection("pushKeys").create({
+            "auth": sub,
+            "p256dh": sub.getKey("auth"),
+            "data": sub.getKey("p256dh")
+          })
         })
         console.log(JSON.stringify(end))
       })
