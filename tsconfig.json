@@ -6,7 +6,9 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "webworker",
+      "es2016"
     ],
     "types": [
       "cypress",
