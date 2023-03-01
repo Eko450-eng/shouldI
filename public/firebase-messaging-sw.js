@@ -2,12 +2,12 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDkVb-WwbKtM0qPWIJkIag4Xt2WZsfpGVw",
-  authDomain: "shouldi-3db33.firebaseapp.com",
-  projectId: "shouldi-3db33",
-  storageBucket: "shouldi-3db33.appspot.com",
-  messagingSenderId: "1001532927236",
-  appId: "1:1001532927236:web:c378b41cf063cb21543451"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_SB,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGESENDERID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
 }
 
 firebase.initializeApp(firebaseConfig)

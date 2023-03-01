@@ -11,7 +11,11 @@ export const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_SB,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGESENDERID,
+<<<<<<< HEAD
   appId: process.env.NEXT_PUBLIC_FIREBASE_APPID
+=======
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
+>>>>>>> 70254fd (Added Firebase cloud messaging)
 };
 
 // Initialize Firebase
