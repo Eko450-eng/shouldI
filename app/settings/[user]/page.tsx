@@ -11,15 +11,8 @@ export default function User({ params }: { params: { user: IUser } }) {
 
   return (
     <div className="flex-center">
-      <Button onClick={() => {
-        {
-          handleSubscription()
-        }
-      }}>Enable notification</Button>
-      <Button onClick={() => {
-        {
-        }
-      }}>Test notification</Button>
+      <Button onClick={() => { handleSubscription() }}>Enable notification</Button>
+      <Button onClick={() => { }}>Test notification</Button>
     </div>
   )
 }
