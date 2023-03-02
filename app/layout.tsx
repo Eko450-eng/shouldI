@@ -3,11 +3,12 @@ import '../styles/globals.scss'
 import { MantineProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
 import NavBar from './navbar/(navbar)'
+import Head from './head'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head />
+      <Head />
       <body>
         <MantineProvider theme={{
           colorScheme: "dark",
