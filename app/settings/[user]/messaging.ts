@@ -18,16 +18,17 @@ export async function saveMessagingDeviceToken() {
   const token = await getToken(msg, { vapidKey: process.env.NEXT_PUBLIC_VAPIDKEY })
   console.log(token)
 
-  if (!pb.authStore.model) return
-  await pb.collection("users").update(pb.authStore.model.id, {
-    "pushNotificationTokenID": token
+  await pb.collection("pushDevices").create({
+    "device": token,
+    "userID": pb.authStore.model?.id
   })
     .then(() => console.log("Success"))
 
   if (token) {
     if (!pb.authStore.model) return
-    await pb.collection("users").update(pb.authStore.model.id, {
-      "pushNotificationTokenID": token
+    await pb.collection("pushDevices").create({
+      "device": token,
+      "userID": pb.authStore.model.id
     })
       .then(() => console.log("Success"))
 
