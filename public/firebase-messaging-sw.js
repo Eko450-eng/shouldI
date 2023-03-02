@@ -13,12 +13,13 @@ firebase.initializeApp({
   appId: "1:1001532927236:web:c378b41cf063cb21543451",
 });
 
-
 const messaging = firebase.messaging();
 
-const body = {
-  body: payload.notification.body
-}
-messaging.onBackgroundMessage(payload => {
-  self.registration.showNotification(payload.notification.title, body)
-})
+// const body = {
+//   body: payload.notification.body
+// }
+
+// messaging.onBackgroundMessage(payload => {
+//   console.log(payload)
+//   // self.registration.showNotification(payload.notification.title, body)
+// })

@@ -25,10 +25,10 @@ export default function VoteButton({ props }: { props: IVoteButton }) {
           if (!value) return
           pb.collection("questions").update(card.id, value)
 
-          await pb.collection("pushDevices").getFullList(1)
+          await pb.collection("pushDevices").getFullList(1, { filter: `userID = ${card.owner}` })
             .then(devices => {
               devices.forEach(device => {
-                sendNewVote(card.title, "Someone voted for NOT IMPLEMENTED", device.device)
+                sendNewVote(card.title, `Someone voted for ${vote}`, device.device)
               })
             })
 
