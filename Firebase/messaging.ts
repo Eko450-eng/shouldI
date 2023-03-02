@@ -1,6 +1,6 @@
 import { showNotification } from '@mantine/notifications'
 import pb from 'app/(pb_functions)'
-import { getToken, onMessage } from 'firebase/messaging'
+import { deleteToken, getToken, onMessage } from 'firebase/messaging'
 import { messaging } from './firebaseConfig'
 
 const VAPID_KEY = process.env.NEXT_PUBLIC_VAPIDKEY
@@ -48,3 +48,9 @@ export async function saveMessagingDeviceToken() {
   return token
 }
 
+export async function deleteThisToken() {
+  const msg = await messaging()
+  if (!msg) return
+  console.log("deleting")
+  await deleteToken(msg)
+}
