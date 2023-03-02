@@ -109,14 +109,14 @@ export default function Login() {
         }
         {
           loginView === "register" ?
-            <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[4] })}
+            <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[3] })}
               onClick={() => signupHandler()}
               type="submit"
             >
               Create new User
             </Button> :
 
-            <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[4] })}
+            <Button sx={theme => ({ backgroundColor: theme.colors.nord_success[3] })}
               onClick={() => loginHandler()}
               type="submit"
             >

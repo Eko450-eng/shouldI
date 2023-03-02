@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "c76f6a9ec0e19033",
+        "id": "508d303197d591f7",
         "type": "tabs",
         "children": [
           {
-            "id": "370ee15312774219",
+            "id": "ec51c5b6eac2ddf3",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -147,18 +147,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e2ae8b93c962d687",
+  "active": "ec51c5b6eac2ddf3",
   "lastOpenFiles": [
-    "app/questions/[question]/(commentbox).tsx",
-    "app/(cards)/(components)/socialButtons/(like).tsx",
-    "app/(cards)/(components)/socialButtons/(deleteButton).tsx",
-    "app/(cards)/(components)/socialButtons/(comment).tsx",
-    "app/(cards)/(components)/socialButtons",
-    "app/(cards)/(components)/(votecomponents)/(buttons).tsx",
-    "app/(cards)/(components)/(votecomponents)/(VoteButton).tsx",
-    "app/(cards)/(components)/(votecomponents)",
-    "ssl-proxy-linux-amd64",
-    "app/(states)/UserAuthState.ts",
-    "app/(states)"
+    "app/head.tsx",
+    "pnpm-lock.yaml.3750718512",
+    "_tmp_232158_2bf4e9a80fcd85e76d309da52487daaa",
+    "app/Signin/layout.tsx",
+    "app/settings/layout.tsx",
+    "app/questions/layout.tsx",
+    "app/navbar/layout.tsx",
+    "app/myquestions/layout.tsx",
+    "app/(cards)/layout.tsx",
+    "public/workbox-7028bf80.js",
+    "app/headOld.tsx",
+    "README.md"
   ]
 }

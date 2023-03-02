@@ -45,3 +45,20 @@ Or even just what Image looks better it's up to you
 - [x] Add images
 - [x] Notifications on everything
 - [x] Send verification email
+
+## Messaging
+- [ ] Subscribe to topics
+- [ ] Unsubscribe from topics
+- [ ] Send messages to topics
+
+### Topics
+- [ ] Likes
+- [ ] Comments
+	- [ ] Comments on my Questions
+	- [ ] Comments on Questions I have commented on
+- [ ] Votes
+	- [ ] Votes on my Questions
+	- [ ] Votes on Questions I have voted for
+- [ ] New Question
+	- [ ] All questions
+	- [ ] Certain Groups

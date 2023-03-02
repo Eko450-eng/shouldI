@@ -24,6 +24,8 @@ pb_migrations/*
 
 # Obsidian note taking
 .obsidian
+.obsidian/
+.obsidian/*
 
 # debug
 npm-debug.log*
@@ -34,6 +36,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env.local
+.env
 
 # vercel
 .vercel

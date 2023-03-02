@@ -1,4 +1,4 @@
-import { getToken } from 'firebase/messaging'
+import { getToken, } from 'firebase/messaging'
 import { messaging } from '../../../firebase/firebaseConfig.js'
 import pb from '../../(pb_functions)'
 
@@ -11,8 +11,19 @@ export async function requestPushPermission() {
 
 export async function saveMessagingDeviceToken() {
   const msg = await messaging()
+
+  // Get the token for this device
   if (!msg) return
-  const token = await getToken(msg, { vapidKey: "BFE6apUW84FptyaCmVS54gk8JPqCaqKejCRbyc3Ss_oMFhPPlU-ANzhjPdS00t5AT29L1E8I_csp6l-8olB7_Ig" })
+
+  const token = await getToken(msg, { vapidKey: process.env.NEXT_PUBLIC_VAPIDKEY })
+  console.log(token)
+
+  if (!pb.authStore.model) return
+  await pb.collection("users").update(pb.authStore.model.id, {
+    "pushNotificationTokenID": token
+  })
+    .then(() => console.log("Success"))
+
   if (token) {
     if (!pb.authStore.model) return
     await pb.collection("users").update(pb.authStore.model.id, {
@@ -23,4 +34,26 @@ export async function saveMessagingDeviceToken() {
   } else {
     requestPushPermission()
   }
+  return token
+}
+
+export async function sendPush(title: string, message: string, key: string) {
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": `${process.env.NEXT_PUBLIC_AUTHORIZATIONKEY}`
+  }
+
+  const body = {
+    "to": key,
+    "notification": {
+      "title": title,
+      "body": message
+    }
+  }
+
+  await fetch('https://fcm.googleapis.com/fcm/send', {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  })
 }

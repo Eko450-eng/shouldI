@@ -108,3 +108,7 @@ export interface IVoteButton {
   currentState: string
 }
 
+export interface IPushDevices {
+  userID: string
+  device: string
+}
