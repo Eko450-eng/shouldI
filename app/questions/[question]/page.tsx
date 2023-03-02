@@ -10,6 +10,7 @@ import { Record } from 'pocketbase'
 
 export default function Page({ params }: { params: { question: string } }) {
   const [question, setQuestion] = useState<IQuestion | null>(null)
+  const [id, setId] = useState<string>("")
   const [comments, setComments] = useState<IComment[] | null>(null)
   const [visibleAmount, setVisibleAmount] = useState<number>(5)
 
@@ -17,6 +18,7 @@ export default function Page({ params }: { params: { question: string } }) {
     await pb.collection("questions").getOne(params.question, { $autoCancel: false, sort: "-created" })
       .then((e: unknown) => {
         const record = e as IQuestion
+        setId(record.id)
         setQuestion(record)
       })
 
@@ -37,7 +39,7 @@ export default function Page({ params }: { params: { question: string } }) {
 
   return (
     <div className="flex-center">
-      {question && <Card props={{ question, visibleBackground: false, buttons: false }} />}
+      {id && <Card props={{ id, visibleBackground: false, buttons: false }} />}
 
       <div style={{ marginBottom: "14rem" }} className="commentbox-wrapper">
         {comments &&

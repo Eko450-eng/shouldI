@@ -12,7 +12,8 @@ export default async function Page({ params }: { params: { user: string } }) {
   return (
     <div className="card-wrapper">
       {items.map((question: IQuestion, index: number) => {
-        return <Card key={index} props={{ question }} />
+        const id = question.id
+        return <Card key={index} props={{ id }} />
       })}
     </div>
   )
