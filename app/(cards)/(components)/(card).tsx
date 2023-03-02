@@ -1,10 +1,12 @@
 'use client'
-import { Group } from "@mantine/core"
+import { ActionIcon, Group } from "@mantine/core"
 import { IQuestion } from "interfaces/interfaces"
 import Buttons from "./(votecomponents)/(buttons)"
 import ImageComponent from "./(imageComponent)"
 import InteractionsRow from "./(InteractionsRow)"
-import DeleteButton from "./socialButtons/(deleteButton)"
+import pb from "app/(pb_functions)"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 interface InterfaceProps {
   question: IQuestion
@@ -26,7 +28,11 @@ export default function card({ props }: { props: InterfaceProps }) {
         <h2 className="question-card-title">
           {question.title}
         </h2>
-        <DeleteButton question={question} />
+        {(pb.authStore.isValid && (question.owner == pb.authStore.model!.id || pb.authStore.model!.role > 9)) &&
+          <ActionIcon onClick={() => pb.collection("questions").delete(question.id)} >
+            <FontAwesomeIcon color="#e03131" icon={faTrash} />
+          </ActionIcon>
+        }
       </div>
 
       <ImageComponent props={{ question, image1, image2 }} />

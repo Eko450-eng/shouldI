@@ -2,11 +2,11 @@
 import { Button, Text } from "@mantine/core";
 import pb from "app/(pb_functions)";
 import { Input } from '@mantine/core'
-import { useEffect, useState } from "react";
-import { saveMessagingDeviceToken, sendPush } from "./messaging";
+import { useState } from "react";
+import { reSendToken, sendPush } from "./messaging";
+import { saveMessagingDeviceToken } from '../../../Firebase/messaging'
 
 export default function User() {
-  const [messageToken, setMessageToken] = useState<string>("")
   const [message, setMessage] = useState({
     title: "",
     msg: ""
@@ -14,9 +14,6 @@ export default function User() {
 
   async function handleSubscription() {
     saveMessagingDeviceToken()
-      .then(res => {
-        if (res) setMessageToken(res)
-      })
   }
 
   async function sendMsg() {
@@ -28,6 +25,12 @@ export default function User() {
         })
       })
   }
+
+  async function fixToken() {
+    reSendToken()
+  }
+
+
 
   return (
     <div className="flex-center">
@@ -46,7 +49,9 @@ export default function User() {
       />
       <Button onClick={() => sendMsg()}>Test notification</Button>
 
-      <Text color="gray">If you have any issues please send a message to ekrem@wipdesign.de with your PushNotification Token: {messageToken}</Text>
+      <Text color="gray">If you have any issues try this </Text>
+      <Button onClick={fixToken}>This is this</Button>
+      <Text>If you still encounter any issue you can send a message to ekrem@wipdesign.de with your issue</Text>
 
     </div>
   )

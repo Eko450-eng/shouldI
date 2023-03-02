@@ -5,6 +5,7 @@ import { NotificationsProvider } from '@mantine/notifications'
 import NavBar from './navbar/(navbar)'
 import Head from './head'
 
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

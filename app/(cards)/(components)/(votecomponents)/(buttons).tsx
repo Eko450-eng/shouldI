@@ -11,7 +11,6 @@ export default function Buttons({ card }: { card: IQuestion }) {
   const [percentage, setPercentage] = useState<{ 1: number, 2: number }>({ 1: 0, 2: 0 })
   const [didVote, setDidVote] = useState<boolean>(false)
 
-
   async function checkIfVoted() {
     const voters = card.voters.voters
     const user = pb.authStore.model?.name

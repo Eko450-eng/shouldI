@@ -5,8 +5,8 @@ import { logout } from 'app/(pb_functions)';
 import { useRouter } from 'next/navigation';
 import { Tooltip, UnstyledButton, createStyles } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faPlus, faQuestion, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
-import { MenuItem } from 'interfaces/interfaces';
+import { faHome, faMask, faPlus, faQuestion, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { IUser, MenuItem } from 'interfaces/interfaces';
 import Mobile from './(mobile)';
 import Desktop from './(desktop)';
 
@@ -57,7 +57,7 @@ export default function NavBar() {
 
   useEffect(() => {
     getAvatarImage()
-  }, [])
+  }, [classes])
 
   pb.authStore.onChange(() => getAvatarImage())
 
@@ -88,6 +88,15 @@ export default function NavBar() {
     }
   ]
 
+  const adminPanel: MenuItem[] = [
+    ...options,
+    {
+      title: "Admin Panel",
+      icon: faMask,
+      function: () => router.push("/Settings")
+    }
+  ]
+
   const lastOption: MenuItem[] = [
     {
       title: "Home",
@@ -114,11 +123,22 @@ export default function NavBar() {
     )
   }
 
-  const links: JSX.Element[] = pb.authStore.isValid ? options.map((option, index) => (
-    <MenuList props={option} key={index} />
-  )) : lastOption.map((option, index) => (
-    <MenuList props={option} key={index} />
-  ))
+  const user = pb.authStore.model ? pb.authStore.model as IUser : null
+
+  const links: JSX.Element[] =
+    (user && user.role && user.role >= 8) ?
+      adminPanel.map((option, index) => (
+        <MenuList props={option} key={index} />
+      ))
+      :
+      pb.authStore.isValid ?
+        options.map((option, index) => (
+          <MenuList props={option} key={index} />
+        ))
+        :
+        lastOption.map((option, index) => (
+          <MenuList props={option} key={index} />
+        ))
 
 
   return (

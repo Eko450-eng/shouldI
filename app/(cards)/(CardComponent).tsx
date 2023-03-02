@@ -22,11 +22,9 @@ export default function CardComponent() {
 
   return (
     <div className="card-wrapper">
-      {data &&
-        data.map((question, index) =>
-          <Card key={index} props={{ question }} />
-        )
-      }
+      {data && data.map((question, index) =>
+        <Card key={index} props={{ question }} />
+      )}
     </div>
   )
 }

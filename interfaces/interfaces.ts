@@ -60,6 +60,7 @@ export interface IQuestion extends Record {
 // My own
 export interface IUser extends Record {
   username: string;
+  role?: number
   email?: string;
   emailVisibility: boolean;
   password: string;
@@ -108,7 +109,7 @@ export interface IVoteButton {
   currentState: string
 }
 
-export interface IPushDevices {
+export interface IPushDevices extends Record {
   userID: string
   device: string
 }

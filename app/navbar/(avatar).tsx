@@ -13,7 +13,7 @@ export default function AvatarIcon() {
   useEffect(() => {
     if (!pb.authStore.model || !pb.authStore.model.image) return
     setAvatar(`${process.env.NEXT_PUBLIC_DBURL}/api/files/users/${pb.authStore.model.id}/${pb.authStore.model.image}`)
-  })
+  }, [])
 
   return (
     <div>

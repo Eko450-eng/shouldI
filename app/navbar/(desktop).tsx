@@ -21,9 +21,10 @@ export default function Desktop({ props }: { props: { avatar: string, links: JSX
             sx={{ justifyContent: "center", width: "min-content" }}
           >
             <Image
+              priority
               onClick={() => {
                 if (!pb.authStore.model) return
-                router.push(`/settings/${pb.authStore.model.id}`)
+                router.push(`/Settings/${pb.authStore.model.id}`)
               }}
               alt={`Avatar Image of the user`}
               className="profile-icon"

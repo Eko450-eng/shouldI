@@ -23,9 +23,10 @@ export default function Mobile({ props }: { props: { avatar: string, links: JSX.
             sx={{ width: "90%", marginInline: "auto", paddingTop: "1rem" }}
           >
             <Image
+              priority
               onClick={() => {
                 if (!pb.authStore.model) return
-                router.push(`/settings/${pb.authStore.model.id}`)
+                router.push(`/Settings/${pb.authStore.model.id}`)
               }}
               alt={`Avatar Image of the user`}
               className="profile-icon"
