@@ -30,8 +30,6 @@ export default function User() {
     reSendToken()
   }
 
-
-
   return (
     <div className="flex-center">
       <Button onClick={() => handleSubscription()}>Enable notification</Button>
@@ -48,9 +46,6 @@ export default function User() {
         value={message.msg}
       />
       <Button onClick={() => sendMsg()}>Test notification</Button>
-
-      <Text color="gray">If you have any issues try this </Text>
-      <Button onClick={fixToken}>This is this</Button>
       <Text>If you still encounter any issue you can send a message to ekrem@wipdesign.de with your issue</Text>
 
     </div>

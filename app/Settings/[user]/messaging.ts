@@ -28,7 +28,7 @@ export async function reSendToken() {
   if (!msg) return
   const token = await getToken(msg, { vapidKey: process.env.NEXT_PUBLIC_VAPIDKEY })
   console.log(token)
-  pb.collection('pushKeys').create({
+  await pb.collection('pushKeys').create({
     token: token
   })
 }
