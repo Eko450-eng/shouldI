@@ -5,7 +5,7 @@ import { logout } from 'app/(pb_functions)';
 import { useRouter } from 'next/navigation';
 import { Tooltip, UnstyledButton, createStyles } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faMask, faPlus, faQuestion, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faMask, faPlus, faQuestion, faRightFromBracket, faRightToBracket, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { IUser, MenuItem } from 'interfaces/interfaces';
 import Mobile from './(mobile)';
 import Desktop from './(desktop)';
@@ -76,6 +76,13 @@ export default function NavBar() {
       title: "Create new question",
       icon: faPlus,
       function: () => router.push("/myquestions/newquestion"),
+    },
+    {
+      title: "Refresh",
+      icon: faRotate,
+      function: () => {
+        router.refresh()
+      }
     },
     {
       title: "Logout",

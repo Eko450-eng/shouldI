@@ -10,20 +10,28 @@ global.EventSource = require("eventsource");
 export default function CardComponent() {
   const router = useRouter()
   const [data, setData] = useState<IQuestion[] | null>(null)
+
   pb.autoCancellation(false)
+
   async function fetchData() {
     const data = await pb.collection("questions").getFullList(1, { sort: "-created" })
     setData(data as IQuestion[])
   }
-  useEffect(() => { fetchData() }, [])
-  pb.authStore.onChange(() => router.refresh())
 
-  pb.collection("questions").subscribe('*', () => fetchData())
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  pb.authStore.onChange(() => router.refresh())
 
   return (
     <div className="card-wrapper">
-      {data && data.map((question, index) =>
-        <Card key={index} props={{ question }} />
+      {data && data.map((question, index) => {
+        const id = question.id
+        return (
+          <Card key={index} props={{ id }} />
+        )
+      }
       )}
     </div>
   )
