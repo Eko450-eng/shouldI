@@ -4,7 +4,7 @@ import pb from "app/(pb_functions)";
 import { Input } from '@mantine/core'
 import { useState } from "react";
 import { sendPush } from "./messaging";
-import { saveMessagingDeviceToken } from '../../../Firebase/messaging'
+import { saveMessagingDeviceToken, resendToken } from '../../../Firebase/messaging'
 import { deleteThisToken } from '../../../Firebase/messaging'
 
 export default function User() {
@@ -31,11 +31,21 @@ export default function User() {
     deleteThisToken()
   }
 
+  async function resend() {
+    resendToken()
+      .then((value: string | undefined) => {
+        pb.collection("pushKeys").create({
+          "token": value
+        })
+      })
+  }
+
 
   return (
     <div className="flex-center">
       <Button onClick={() => handleSubscription()}>Enable notification</Button>
       <Button onClick={() => deleteToken()}>Disable notification</Button>
+      <Button onClick={() => resend()}>Fix token</Button>
 
       <Input
         onChange={(v) => setMessage({ ...message, title: v.target.value })}

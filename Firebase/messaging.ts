@@ -48,6 +48,14 @@ export async function saveMessagingDeviceToken() {
   return token
 }
 
+export async function resendToken() {
+  const msg = await messaging()
+  if (!msg) return
+  const token = await getToken(msg)
+  console.log(token)
+  return token
+}
+
 export async function deleteThisToken() {
   const msg = await messaging()
   if (!msg) return
