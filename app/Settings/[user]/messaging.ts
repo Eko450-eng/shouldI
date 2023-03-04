@@ -34,7 +34,6 @@ export async function reSendToken() {
 }
 
 export async function sendNewVote(vote: string, message: string, key: string) {
-
   const headers = {
     "Content-Type": "application/json",
     "Authorization": `${process.env.NEXT_PUBLIC_AUTHORIZATIONKEY}`
@@ -45,7 +44,6 @@ export async function sendNewVote(vote: string, message: string, key: string) {
     "notification": {
       "title": `There has been a new vote on ${vote}`,
       "body": message,
-      "icon": "/Logo.png"
     }
   }
 
