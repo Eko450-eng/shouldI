@@ -39,11 +39,11 @@ export default function card({ props }: { props: InterfaceProps }) {
 
   }, [props])
 
-  useEffect(() => {
-    pb.collection("questions").subscribe(id, (e: any) => {
-      getQuestion()
-    })
-  }, [id])
+  // useEffect(() => {
+  //   pb.collection("questions").subscribe(id, (e: any) => {
+  //     getQuestion()
+  //   })
+  // }, [id])
 
   return (
     <Group sx={theme => ({ backgroundColor: visibleBackground ? theme.colors.nord_gray[4] : "none" })} className="question-card">
