@@ -19,12 +19,6 @@ export async function saveMessagingDeviceToken() {
 
   console.log("Got token", token)
 
-  if (!pb.authStore.model) return
-  await pb.collection("pushDevices").create({
-    "device": token,
-    "userID": pb.authStore.model.id
-  })
-
   if (token) {
     if (!pb.authStore.model) return
     await pb.collection("pushDevices").create({
