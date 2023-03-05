@@ -27,7 +27,7 @@ export async function reSendToken() {
   const msg = getMessaging(app)
   if (!msg) return
   const token = await getToken(msg, { vapidKey: process.env.NEXT_PUBLIC_VAPIDKEY })
-  console.log(token)
+
   await pb.collection('pushKeys').create({
     token: token
   })
@@ -43,7 +43,7 @@ export async function sendNewVote(vote: string, message: string, key: string) {
     "to": key,
     "notification": {
       "title": `There has been a new vote on ${vote}`,
-      "body": message,
+      "body": message
     }
   }
 

@@ -25,7 +25,6 @@ export default function VoteButton({ props }: { props: IVoteButton }) {
           if (!value) return
           pb.collection("questions").update(card.id, value)
 
-          console.log(card.owner)
           await pb.collection("pushDevices").getFullList(1, { filter: `userID = "${card.owner}"` })
             .then(devices => {
               devices.forEach(device => {
