@@ -3,12 +3,14 @@
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJnecnFHGPezSQ.woff2) format('woff2');
+  font-display: swap;
 }
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
   src: url(https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459WZhyyTh89ZNpQ.woff2) format('woff2');
+  font-display: swap;
 }
 
 $rich-black-fogra-29: hsla(197, 100%, 5%, 1);
