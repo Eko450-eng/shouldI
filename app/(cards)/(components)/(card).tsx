@@ -8,6 +8,7 @@ import pb from "app/(pb_functions)"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 interface InterfaceProps {
   id: string
@@ -16,6 +17,8 @@ interface InterfaceProps {
 }
 
 export default function card({ props }: { props: InterfaceProps }) {
+  pb.autoCancellation(false)
+  const router = useRouter()
   let visibleBackground = props.visibleBackground != undefined ? props.visibleBackground : true
   let buttons = props.buttons != undefined ? props.buttons : true
   const [question, setQuestion] = useState<IQuestion>()
@@ -39,11 +42,21 @@ export default function card({ props }: { props: InterfaceProps }) {
 
   }, [props])
 
-  // useEffect(() => {
-  //   pb.collection("questions").subscribe(id, (e: any) => {
-  //     getQuestion()
-  //   })
-  // }, [id])
+  useEffect(() => {
+    pb.collection("questions").subscribe(id, (e: any) => {
+      getQuestion()
+    })
+    return (() => {
+      pb.collection("questions").unsubscribe('*')
+    })
+  }, [id])
+
+  async function deleteQuestion() {
+    if (!question) return
+    pb.collection('questions').unsubscribe(question.id)
+    pb.collection("questions").delete(question.id)
+    router.refresh()
+  }
 
   return (
     <Group sx={theme => ({ backgroundColor: visibleBackground ? theme.colors.nord_gray[4] : "none" })} className="question-card">
@@ -55,7 +68,7 @@ export default function card({ props }: { props: InterfaceProps }) {
             </h2>
             {
               (pb.authStore.isValid && (question.owner == pb.authStore.model!.id || pb.authStore.model!.role > 9)) &&
-              <ActionIcon onClick={() => pb.collection("questions").delete(question.id)} >
+              <ActionIcon onClick={() => deleteQuestion()} >
                 <FontAwesomeIcon color="#e03131" icon={faTrash} />
               </ActionIcon>
             }

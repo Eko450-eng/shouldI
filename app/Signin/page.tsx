@@ -16,47 +16,68 @@ export default function Login() {
 
   const router = useRouter()
 
-  const loginHandler = () => {
-    pb.collection("users").authWithPassword(userName, password)
-      .then(() => {
-        showNotification({
-          title: "Welcome",
-          message: "You have been successfully logged in",
-          color: "green"
-        })
-        router.push("/")
-      }).catch(() => {
-        showNotification({
-          title: "Oops",
-          message: "Something went wrong please try again",
-          color: "red"
-        })
-      })
+  const loginHandler = async () => {
+    const body = {
+      name: userName,
+      password: password,
+      email: email
+    }
+    await fetch('/api', {
+      method: "post",
+      body: JSON.stringify(body)
+    })
+
+    // pb.collection("users").authWithPassword(userName, password)
+    //   .then(() => {
+    //     showNotification({
+    //       title: "Welcome",
+    //       message: "You have been successfully logged in",
+    //       color: "green"
+    //     })
+    //     router.push("/")
+    //   }).catch(() => {
+    //     showNotification({
+    //       title: "Oops",
+    //       message: "Something went wrong please try again",
+    //       color: "red"
+    //     })
+    //   })
   }
 
   const signupHandler = async () => {
-    const formData = new FormData()
-    formData.append("username", userName)
-    formData.append("email", email)
-    formData.append("emailVisibility", "true")
-    formData.append("password", password)
-    formData.append("passwordConfirm", confirmPassword)
-    formData.append("name", userName)
-    formData.append("role", "1")
-    if (image) formData.append("image", image as Blob)
-    if (!image) formData.append("image", "")
 
-    await pb.collection("users").create(formData)
-      .then(async () => {
-        await pb.collection("users").requestVerification(email)
-        loginHandler()
-      }).catch((e: Error) => {
-        showNotification({
-          title: "Oops",
-          message: "Something went wrong please try again",
-          color: "red"
-        })
-      })
+    const body = {
+      name: userName,
+      password: password,
+      email: email
+    }
+    await fetch('http://localhost:3000/api/createuser', {
+      method: "post",
+      body: JSON.stringify(body)
+    })
+
+    // const formData = new FormData()
+    // formData.append("username", userName)
+    // formData.append("email", email)
+    // formData.append("emailVisibility", "true")
+    // formData.append("password", password)
+    // formData.append("passwordConfirm", confirmPassword)
+    // formData.append("name", userName)
+    // formData.append("role", "1")
+    // if (image) formData.append("image", image as Blob)
+    // if (!image) formData.append("image", "")
+
+    // await pb.collection("users").create(formData)
+    //   .then(async () => {
+    //     await pb.collection("users").requestVerification(email)
+    //     loginHandler()
+    //   }).catch((e: Error) => {
+    //     showNotification({
+    //       title: "Oops",
+    //       message: "Something went wrong please try again",
+    //       color: "red"
+    //     })
+    //   })
   }
 
 
