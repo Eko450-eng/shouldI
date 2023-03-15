@@ -51,6 +51,7 @@ export default function Login() {
         await pb.collection("users").requestVerification(email)
         loginHandler()
       }).catch((e: Error) => {
+        console.log(e)
         showNotification({
           title: "Oops",
           message: "Something went wrong please try again",

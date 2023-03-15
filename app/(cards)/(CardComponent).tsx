@@ -1,7 +1,7 @@
 'use client'
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ActionIcon, Stack } from '@mantine/core';
+import { ActionIcon, Stack, Text } from '@mantine/core';
 import pb from 'app/(pb_functions)';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ export default function CardComponent() {
   const [page, setPage] = useState<number>(1)
 
   pb.autoCancellation(false)
+  pb.authStore.onChange(() => router.refresh())
 
   async function fetchData() {
     const data = await pb.collection("questions").getList(page, 10, { sort: "-created" })
@@ -37,18 +38,19 @@ export default function CardComponent() {
     fetchData()
   }, [page])
 
-  pb.authStore.onChange(() => router.refresh())
-
   return (
     <Stack>
       <div className="card-wrapper">
-        {data && data.map((question, index) => {
-          const id = question.id
-          return (
-            <Card key={index} props={{ id }} />
-          )
+        {!data || data?.length <= 0 &&
+          <Text color="white">No Questions be the first to ask something</Text>
         }
-        )}
+        {data &&
+          data.map((question, index) => {
+            const id = question.id
+            return (
+              <Card key={index} props={{ id }} />
+            )
+          })}
       </div>
 
       <div className="card-wrapper">

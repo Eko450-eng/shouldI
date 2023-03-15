@@ -8,6 +8,7 @@ import pb from "app/(pb_functions)"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
+import { deleteQuestion } from "./socialButtons/logicalFunctions"
 
 interface InterfaceProps {
   id: string
@@ -31,12 +32,9 @@ export default function card({ props }: { props: InterfaceProps }) {
 
   useEffect(() => {
     getQuestion()
-
     if (!question) return
     setImage1(`${process.env.NEXT_PUBLIC_DBURL}/api/files/${question.collectionId}/${question.id}/${question.image1}`)
     setImage2(`${process.env.NEXT_PUBLIC_DBURL}/api/files/${question.collectionId}/${question.id}/${question.image2}`)
-
-
   }, [props])
 
   // useEffect(() => {
@@ -55,7 +53,7 @@ export default function card({ props }: { props: InterfaceProps }) {
             </h2>
             {
               (pb.authStore.isValid && (question.owner == pb.authStore.model!.id || pb.authStore.model!.role > 9)) &&
-              <ActionIcon onClick={() => pb.collection("questions").delete(question.id)} >
+              <ActionIcon onClick={() => deleteQuestion(question.id)} >
                 <FontAwesomeIcon color="#e03131" icon={faTrash} />
               </ActionIcon>
             }

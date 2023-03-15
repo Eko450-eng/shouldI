@@ -1,21 +1,10 @@
 'use client'
 import { useState } from 'react'
-import { IQuestion } from '../../../interfaces/interfaces'
+import { IImageProps, selectionImage } from '../../../interfaces/interfaces'
 import Image from 'next/image'
 import { Modal } from '@mantine/core'
 
-interface InterfaceProps {
-  question: IQuestion
-  image1: string
-  image2: string
-}
-
-interface selectionImage {
-  open: boolean
-  selectedImage: string | undefined
-}
-
-export default function ImageComponent({ props }: { props: InterfaceProps }) {
+export default function ImageComponent({ props }: { props: IImageProps }) {
   const { question, image1, image2 } = props
   const [open, setOpen] = useState<selectionImage>({
     open: false,

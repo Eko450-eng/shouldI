@@ -113,3 +113,14 @@ export interface IPushDevices extends Record {
   userID: string
   device: string
 }
+
+export interface IImageProps {
+  question: IQuestion
+  image1: string
+  image2: string
+}
+
+export interface selectionImage {
+  open: boolean
+  selectedImage: string | undefined
+}

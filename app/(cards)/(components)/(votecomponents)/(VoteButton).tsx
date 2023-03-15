@@ -6,7 +6,7 @@ import { sendNewVote } from "app/Settings/[user]/messaging";
 import { IFirstAnswer, ISecondAnswer, IUser, IVoteButton } from "interfaces/interfaces";
 
 export default function VoteButton({ props }: { props: IVoteButton }) {
-  const { name, votes, vote, card, voteValue, currentState } = props
+  const { name, vote, card, voteValue, currentState } = props
   const highlight: boolean = vote == voteValue
 
 
@@ -45,7 +45,7 @@ export default function VoteButton({ props }: { props: IVoteButton }) {
 
   return (
     <Button
-      sx={(theme) => ({
+      sx={({
         background: "none",
         color: "white",
         border: highlight ? `2px solid ${vote == 1 ? card.color1 : card.color2}` : "1px solid white",
